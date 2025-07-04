@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+*.Db
+/src/FrontEnd/ClickMarket.Api/BancoAutomatico.Db-shm
+*.Db-wal
