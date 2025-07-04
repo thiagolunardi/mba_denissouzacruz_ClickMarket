@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ClickMarket.AppMvc.ViewModels.CategoriaViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Categorias";
+}
+
+<h3>Gestão de Categorias</h3>
+<br />
+
+<p>
+    <a class="btn btn-light" asp-action="Create"><span class="fa fa-plus"></span>Novo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info"><span class="fa fa-search"></span></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><span class="fa fa-trash"></span></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

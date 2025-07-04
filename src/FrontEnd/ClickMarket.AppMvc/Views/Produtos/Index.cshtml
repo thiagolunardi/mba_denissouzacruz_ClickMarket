@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ClickMarket.AppMvc.ViewModels.ProdutoViewModel>
+@{
+    ViewData["Title"] = "Meus Produtos";
+}
+<h3>@ViewData["Title"]</h3>
+<br />
+<p>
+    <a class="btn btn-light" asp-action="Create"><span class="fa fa-plus"></span>Novo</a>
+</p>
+
+<style>
+    .card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+    }
+
+    .card-text {
+        font-size: 0.85rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .card-footer .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .product-card img {
+        height: 150px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="row row-cols-2 row-cols-md-5 g-3">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm product-card">
+                <img src="~/images/upload/@item.Imagem" class="card-img-top" alt="@item.Nome" />
+
+                <div class="card-body p-2">
+                    <h5 class="card-title">@item.Nome</h5>
+                    <p class="card-text text-muted">@item.Descricao</p>
+                    <p class="card-text text-success mb-1">R$ @item.Valor.ToString("N2")</p>
+                </div>
+
+                <div class="card-footer d-flex justify-content-between p-2">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info"><i class="fa fa-search"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

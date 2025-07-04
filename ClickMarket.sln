@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35004.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aplicacoes", "Aplicacoes", "{D5A4BD01-15C8-490F-BF94-5344143E7307}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{42015B98-EDB9-4E70-B807-7C87F2041DB0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClickMarket.Data", "src\BackEnd\ClickMaket.Data\ClickMarket.Data.csproj", "{1AC880A0-D0A0-4C39-8E34-EBA2318EAC18}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClickMarket.Business", "src\BackEnd\ClickMarket.Business\ClickMarket.Business.csproj", "{129600E9-A364-46A2-89DD-2EC8550E0F79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClickMarket.AppMvc", "src\FrontEnd\ClickMarket.AppMvc\ClickMarket.AppMvc.csproj", "{B101DB25-FE87-4A37-9F72-AC2441324934}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClickMarket.Api", "src\FrontEnd\ClickMarket.Api\ClickMarket.Api.csproj", "{2577AFEE-DF64-404D-9357-20AE8D2424E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AC880A0-D0A0-4C39-8E34-EBA2318EAC18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC880A0-D0A0-4C39-8E34-EBA2318EAC18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC880A0-D0A0-4C39-8E34-EBA2318EAC18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC880A0-D0A0-4C39-8E34-EBA2318EAC18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{129600E9-A364-46A2-89DD-2EC8550E0F79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{129600E9-A364-46A2-89DD-2EC8550E0F79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{129600E9-A364-46A2-89DD-2EC8550E0F79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{129600E9-A364-46A2-89DD-2EC8550E0F79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B101DB25-FE87-4A37-9F72-AC2441324934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B101DB25-FE87-4A37-9F72-AC2441324934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B101DB25-FE87-4A37-9F72-AC2441324934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B101DB25-FE87-4A37-9F72-AC2441324934}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2577AFEE-DF64-404D-9357-20AE8D2424E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2577AFEE-DF64-404D-9357-20AE8D2424E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2577AFEE-DF64-404D-9357-20AE8D2424E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2577AFEE-DF64-404D-9357-20AE8D2424E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1AC880A0-D0A0-4C39-8E34-EBA2318EAC18} = {42015B98-EDB9-4E70-B807-7C87F2041DB0}
+		{129600E9-A364-46A2-89DD-2EC8550E0F79} = {42015B98-EDB9-4E70-B807-7C87F2041DB0}
+		{B101DB25-FE87-4A37-9F72-AC2441324934} = {D5A4BD01-15C8-490F-BF94-5344143E7307}
+		{2577AFEE-DF64-404D-9357-20AE8D2424E8} = {D5A4BD01-15C8-490F-BF94-5344143E7307}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D8BFF5FD-9FA3-410B-BCC7-21863DB2C113}
+	EndGlobalSection
+EndGlobal
