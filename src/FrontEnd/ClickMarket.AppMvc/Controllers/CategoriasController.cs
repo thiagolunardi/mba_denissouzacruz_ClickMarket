@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ClickMarket.Business.Models;
-using ClickMarket.Business.Interfaces;
-using AutoMapper;
+﻿using AutoMapper;
 using ClickMarket.AppMvc.ViewModels;
+using ClickMarket.Business.Interfaces;
+using ClickMarket.Business.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClickMarket.AppMvc.Controllers
 {

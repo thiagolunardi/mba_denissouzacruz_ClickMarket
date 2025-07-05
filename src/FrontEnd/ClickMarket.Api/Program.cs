@@ -19,7 +19,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllers()
-    .ConfigureApiBehaviorOptions(options => {
+    .ConfigureApiBehaviorOptions(options =>
+    {
         options.SuppressModelStateInvalidFilter = true;
     });
 

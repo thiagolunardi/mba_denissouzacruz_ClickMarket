@@ -3,13 +3,9 @@ using ClickMarket.Business.Models;
 
 namespace ClickMarket.Business.Services
 {
-    public class CategoriaService : ICategoriaService
+    public class CategoriaService(ICategoriaRepository categoriaRepository) : ICategoriaService
     {
-        private readonly ICategoriaRepository _categoriaRepository;
-        public CategoriaService(ICategoriaRepository categoriaRepository)
-        {
-            _categoriaRepository = categoriaRepository;
-        }
+        private readonly ICategoriaRepository _categoriaRepository = categoriaRepository;
 
         public async Task Adicionar(Categoria categoria)
         {
@@ -33,11 +29,7 @@ namespace ClickMarket.Business.Services
         public void Dispose()
         {
             _categoriaRepository?.Dispose();
-        }
-
-        public async Task<List<Categoria>> ObterTodasCategorias()
-        {
-            return await _categoriaRepository.ObterTodos();
+            GC.SuppressFinalize(this);
         }
     }
 }

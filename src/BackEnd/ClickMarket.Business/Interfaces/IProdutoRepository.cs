@@ -2,7 +2,7 @@
 
 namespace ClickMarket.Business.Interfaces
 {
-    public interface IProdutoRepository: IRepository<Produto>
+    public interface IProdutoRepository : IRepository<Produto>
     {
         Task<IEnumerable<Produto>> ObterProdutoCategoria();
         Task<Produto> ObterProdutoCategoria(Guid id);

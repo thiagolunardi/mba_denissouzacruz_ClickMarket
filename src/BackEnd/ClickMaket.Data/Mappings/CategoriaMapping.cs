@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ClickMarket.Data.Mappings
 {
-    public class CategoriaMapping: IEntityTypeConfiguration<Categoria>
+    public class CategoriaMapping : IEntityTypeConfiguration<Categoria>
     {
         public void Configure(EntityTypeBuilder<Categoria> builder)
         {

@@ -2,7 +2,7 @@
 
 namespace ClickMarket.Business.Interfaces
 {
-    public interface IVendedorRepository: IRepository<Vendedor>
+    public interface IVendedorRepository : IRepository<Vendedor>
     {
     }
 }

@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Reflection;
-using AutoMapper;
+﻿using AutoMapper;
 
 namespace ClickMarket.Api.Configurations
 {

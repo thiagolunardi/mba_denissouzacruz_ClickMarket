@@ -1,11 +1,11 @@
-﻿using ClickMarket.Data.Context;
-using ClickMarket.Business.Interfaces;
+﻿using ClickMarket.Business.Interfaces;
 using ClickMarket.Business.Models;
+using ClickMarket.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClickMarket.Data.Repository
 {
-    public class CategoriaRepository: Repository<Categoria>, ICategoriaRepository
+    public class CategoriaRepository : Repository<Categoria>, ICategoriaRepository
     {
         public CategoriaRepository(ClickDbContext clickDbContext) : base(clickDbContext)
         {

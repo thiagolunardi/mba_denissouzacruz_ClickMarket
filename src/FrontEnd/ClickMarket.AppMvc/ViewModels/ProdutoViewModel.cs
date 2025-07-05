@@ -1,6 +1,6 @@
 ﻿using ClickMarket.Business.Models;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ClickMarket.AppMvc.ViewModels
 {
