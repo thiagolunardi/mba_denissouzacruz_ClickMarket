@@ -13,8 +13,6 @@ public static class IdentityConfig
             .AddEntityFrameworkStores<ClickDbContext>()
             .AddEntityFrameworkStores<ApiDbContext>();
 
-        builder.Services.AddHttpContextAccessor();
-
         return builder;
     }
 }

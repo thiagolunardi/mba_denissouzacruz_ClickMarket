@@ -27,7 +27,7 @@ namespace ClickMarket.Api.Configurations
 
             if (env.IsDevelopment())
             {
-                await contextID.Database.MigrateAsync();
+                //await contextID.Database.MigrateAsync();
                 await contextClick.Database.MigrateAsync();
 
                 await EnsureSeedProducts(contextID, contextClick);

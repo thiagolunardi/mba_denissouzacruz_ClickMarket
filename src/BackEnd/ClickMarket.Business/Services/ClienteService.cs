@@ -1,4 +1,5 @@
-﻿using ClickMarket.Business.Dtos;
+﻿using AutoMapper;
+using ClickMarket.Business.Dtos;
 using ClickMarket.Business.Interfaces;
 using ClickMarket.Business.Models;
 using ClickMarket.Business.Requests;
@@ -7,18 +8,12 @@ namespace ClickMarket.Business.Services;
 
 public class ClienteService(
     INotificador notificador,
-    IClienteRepository clienteRepository) : BaseService(notificador), IClienteService
+    IClienteRepository clienteRepository,
+    IMapper mapper) : BaseService(notificador), IClienteService
 {
     public async Task<Cliente> Adicionar(ClienteRequest request)
     {
-        var cliente = new Cliente
-        {
-            Id = Guid.NewGuid(),
-            Nome = request.Nome,
-            Email = request.Email,
-            Telefone = request.Telefone,
-            Ativo = true
-        };
+        var cliente = mapper.Map<ClienteRequest, Cliente>(request);
 
         if (!request.IsValid())
         {
@@ -84,13 +79,7 @@ public class ClienteService(
         }
 
         // Mapeia o cliente para o DTO
-        var clienteDto = new ClienteDto
-        {
-            Id = clienteExistente.Id,
-            Nome = clienteExistente.Nome,
-            Email = clienteExistente.Email,
-            Telefone = clienteExistente.Telefone
-        };
+        var clienteDto = mapper.Map<Cliente, ClienteDto>(clienteExistente);
 
         return clienteDto;
     }
@@ -99,13 +88,7 @@ public class ClienteService(
     {
         var clientes = await clienteRepository.ObterTodos();
 
-        return clientes.Select(c => new ClienteDto
-        {
-            Id = c.Id,
-            Nome = c.Nome,
-            Email = c.Email,
-            Telefone = c.Telefone
-        });
+        return mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteDto>>(clientes);
     }
 
     public async Task Remover(Guid id)
