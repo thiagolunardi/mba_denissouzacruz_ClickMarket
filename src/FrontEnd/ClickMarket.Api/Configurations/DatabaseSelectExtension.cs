@@ -6,7 +6,7 @@ namespace ClickMarket.Api.Configurations
 {
     public static class DatabaseSelectExtension
     {
-        public static void AddDatabaseSelector(this WebApplicationBuilder builder)
+        public static WebApplicationBuilder AddDatabaseSelector(this WebApplicationBuilder builder)
         {
             if (builder.Environment.IsDevelopment())
             {
@@ -27,6 +27,7 @@ namespace ClickMarket.Api.Configurations
                     options.UseSqlServer(connectionString));
             }
 
+            return builder;
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using ClickMarket.Api.Models;
 using ClickMarket.Business.Interfaces;
-using ClickMarket.Business.Models;
 using ClickMarket.Business.Requests;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

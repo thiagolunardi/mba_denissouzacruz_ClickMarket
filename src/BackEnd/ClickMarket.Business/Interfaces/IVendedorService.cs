@@ -1,11 +1,10 @@
 ﻿using ClickMarket.Business.Models;
 
-namespace ClickMarket.Business.Interfaces
+namespace ClickMarket.Business.Interfaces;
+
+public interface IVendedorService : IDisposable
 {
-    internal interface IVendedorService : IDisposable
-    {
-        public Task Adicionar(Vendedor vendedor);
-        public Task Remover(Guid id);
-        public Task Atualizar(Vendedor vendedor);
-    }
+    public Task Adicionar(Vendedor vendedor);
+    public Task Remover(Guid id);
+    public Task Atualizar(Vendedor vendedor);
 }

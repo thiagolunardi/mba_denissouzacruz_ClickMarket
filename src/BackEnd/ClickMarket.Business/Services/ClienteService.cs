@@ -77,7 +77,7 @@ public class ClienteService(
         // Verifica se o cliente existe
         var clienteExistente = await clienteRepository.ObterPorId(id);
 
-        if(clienteExistente == null)
+        if (clienteExistente == null)
         {
             Notificar("Cliente não encontrado.");
             return null;

@@ -4,7 +4,7 @@ using ClickMarket.Business.Models;
 namespace ClickMarket.Business.Services;
 
 public class ProdutoService(
-    INotificador notificador, 
+    INotificador notificador,
     IProdutoRepository produtoRepository) : BaseService(notificador), IProdutoService
 {
     private readonly IProdutoRepository _produtoRepository = produtoRepository;
