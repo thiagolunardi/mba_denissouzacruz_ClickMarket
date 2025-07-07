@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ClickMarket.Business.Models
+﻿namespace ClickMarket.Business.Models
 {
-    public class Produto: EntityBase
+    public class Produto : EntityBase
     {
         public Guid CategoriaId { get; set; }
         public Guid VendedorId { get; set; }

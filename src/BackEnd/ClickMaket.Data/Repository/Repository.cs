@@ -1,13 +1,8 @@
-﻿using ClickMarket.Data.Context;
-using ClickMarket.Business.Interfaces;
+﻿using ClickMarket.Business.Interfaces;
 using ClickMarket.Business.Models;
+using ClickMarket.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClickMarket.Data.Repository
 {
@@ -67,6 +62,7 @@ namespace ClickMarket.Data.Repository
         public void Dispose()
         {
             _clickDb?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

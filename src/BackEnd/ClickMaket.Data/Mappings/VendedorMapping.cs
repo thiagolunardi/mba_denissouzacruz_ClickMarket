@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ClickMarket.Data.Mappings
 {
-    public class VendedorMapping: IEntityTypeConfiguration<Vendedor>
+    public class VendedorMapping : IEntityTypeConfiguration<Vendedor>
     {
         public void Configure(EntityTypeBuilder<Vendedor> builder)
         {

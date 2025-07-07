@@ -1,7 +1,7 @@
-using ClickMarket.Data.Repository;
 using ClickMarket.AppMvc.Configurations;
 using ClickMarket.AppMvc.Data;
 using ClickMarket.Business.Interfaces;
+using ClickMarket.Data.Repository;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);

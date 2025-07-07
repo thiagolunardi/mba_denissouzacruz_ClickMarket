@@ -245,5 +245,5 @@ namespace ClickMarket.AppMvc.Controllers
                 System.IO.File.Delete(caminhoImagem);
             }
         }
-    } 
+    }
 }
