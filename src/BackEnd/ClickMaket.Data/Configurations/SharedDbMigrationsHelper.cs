@@ -41,6 +41,7 @@ namespace ClickMarket.Data.Configurations
 
             try
             {
+                //a
                 Console.WriteLine($"[{projectName}] Iniciando inicialização do banco compartilhado...");
                 
                 using var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
