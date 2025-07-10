@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClickMarket.Api.Context
 {
-    public class ApiDbContext : IdentityDbContext
-    {
-        public ApiDbContext(DbContextOptions<ApiDbContext> options)
-            : base(options)
-        {
-        }
-    }
+    //public class ApiDbContext : IdentityDbContext
+    //{
+    //    public ApiDbContext(DbContextOptions<ApiDbContext> options)
+    //        : base(options)
+    //    {
+    //    }
+    //}
 }

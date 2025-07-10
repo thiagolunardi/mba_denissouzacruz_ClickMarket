@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ClickMarket.Api.Migrations
+namespace ClickMarket.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class v01_inicio : Migration
+    public partial class v01_InicializaIdentity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
