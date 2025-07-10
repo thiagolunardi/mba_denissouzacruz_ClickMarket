@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClickMarket.Data.Context
 {
-    public class ClickDbContext(DbContextOptions<ClickDbContext> options) : IdentityDbContext(options)
+    public class ClickDbContext(DbContextOptions<ClickDbContext> options) : DbContext(options)
     {
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Vendedor> Vendedores { get; set; }

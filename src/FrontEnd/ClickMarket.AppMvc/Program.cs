@@ -1,27 +1,18 @@
 using ClickMarket.AppMvc.Configurations;
 using ClickMarket.AppMvc.Data;
 using ClickMarket.Business.Interfaces;
+using ClickMarket.Data.Context;
 using ClickMarket.Data.Repository;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddDatabaseSelector();
+builder
+    .AddDatabaseSelector()
+    .AddMvcConfig()
+    .RegisterServices()
+    .AddIdentityConfig();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
-builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
-builder.Services.AddScoped<IVendedorRepository, VendedorRepository>();
-
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
 
 var app = builder.Build();
 

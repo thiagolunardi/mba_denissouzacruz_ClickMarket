@@ -92,7 +92,9 @@ public class AuthController : MainController
             return ValidationProblem(new ValidationProblemDetails(ModelState)
             { Title = "Ocorreu um erro ao cadastrar o usuário!" });
 
+
         var result = await _signInManager.PasswordSignInAsync(userLoginViewModel.Email, userLoginViewModel.Password, false, true);
+
         if (result.Succeeded)
         {
             return Ok(GerarJwt(userLoginViewModel.Email));

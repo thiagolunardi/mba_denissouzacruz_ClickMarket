@@ -10,8 +10,7 @@ public static class IdentityConfig
     {
         builder.Services.AddIdentity<IdentityUser, IdentityRole>()
             .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ClickDbContext>()
-            .AddEntityFrameworkStores<ApiDbContext>();
+            .AddEntityFrameworkStores<ApplicationDbContext>();
 
         return builder;
     }
