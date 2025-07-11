@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClickMarket.AppMvc", "src\F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClickMarket.Api", "src\FrontEnd\ClickMarket.Api\ClickMarket.Api.csproj", "{2577AFEE-DF64-404D-9357-20AE8D2424E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickMarket.Blazor", "src\FrontEnd\ClickMarket.Blazor\ClickMarket.Blazor\ClickMarket.Blazor.csproj", "{CE79D0E2-E88A-4B30-9662-F3BF46E4FA04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickMarket.Blazor.Client", "src\FrontEnd\ClickMarket.Blazor\ClickMarket.Blazor.Client\ClickMarket.Blazor.Client.csproj", "{A60F687C-A703-4DE4-B93D-9C2BD89169A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,14 @@ Global
 		{2577AFEE-DF64-404D-9357-20AE8D2424E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2577AFEE-DF64-404D-9357-20AE8D2424E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2577AFEE-DF64-404D-9357-20AE8D2424E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE79D0E2-E88A-4B30-9662-F3BF46E4FA04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE79D0E2-E88A-4B30-9662-F3BF46E4FA04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE79D0E2-E88A-4B30-9662-F3BF46E4FA04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE79D0E2-E88A-4B30-9662-F3BF46E4FA04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A60F687C-A703-4DE4-B93D-9C2BD89169A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A60F687C-A703-4DE4-B93D-9C2BD89169A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A60F687C-A703-4DE4-B93D-9C2BD89169A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A60F687C-A703-4DE4-B93D-9C2BD89169A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +58,8 @@ Global
 		{129600E9-A364-46A2-89DD-2EC8550E0F79} = {42015B98-EDB9-4E70-B807-7C87F2041DB0}
 		{B101DB25-FE87-4A37-9F72-AC2441324934} = {D5A4BD01-15C8-490F-BF94-5344143E7307}
 		{2577AFEE-DF64-404D-9357-20AE8D2424E8} = {D5A4BD01-15C8-490F-BF94-5344143E7307}
+		{CE79D0E2-E88A-4B30-9662-F3BF46E4FA04} = {D5A4BD01-15C8-490F-BF94-5344143E7307}
+		{A60F687C-A703-4DE4-B93D-9C2BD89169A1} = {D5A4BD01-15C8-490F-BF94-5344143E7307}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D8BFF5FD-9FA3-410B-BCC7-21863DB2C113}

@@ -1,0 +1,81 @@
+@page "/register"
+@rendermode InteractiveAuto
+
+<PageTitle>Cadastro</PageTitle>
+
+<h1>Cadastro</h1>
+
+<EditForm Model="@registerModel" OnValidSubmit="@HandleRegister">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">Nome</label>
+        <InputText class="form-control" @bind-Value="registerModel.Name" />
+        <ValidationMessage For="@(() => registerModel.Name)" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <InputText class="form-control" @bind-Value="registerModel.Email" />
+        <ValidationMessage For="@(() => registerModel.Email)" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Senha</label>
+        <InputText type="password" class="form-control" @bind-Value="registerModel.Password" />
+        <ValidationMessage For="@(() => registerModel.Password)" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Confirmar senha</label>
+        <InputText type="password" class="form-control" @bind-Value="registerModel.ConfirmPassword" />
+        <ValidationMessage For="@(() => registerModel.ConfirmPassword)" />
+    </div>
+
+    <button class="btn btn-primary" type="submit" disabled="@loading">Cadastrar</button>
+</EditForm>
+
+@if (!string.IsNullOrWhiteSpace(error))
+{
+    <div class="alert alert-danger mt-3">@error</div>
+}
+
+@code {
+    private ClickMarket.Blazor.Client.Models.RegisterUserViewModel registerModel = new();
+    private bool loading;
+    private string error;
+
+    [Inject] private IJSRuntime JS { get; set; } = default!;
+    [Inject] private HttpClient Http { get; set; } = default!;
+    [Inject] private NavigationManager Nav { get; set; } = default!;
+
+    private async Task HandleRegister()
+    {
+        loading = true;
+        error = null;
+        try
+        {
+            var response = await Http.PostAsJsonAsync("api/conta/registrar", registerModel);
+            if (response.IsSuccessStatusCode)
+            {
+                var token = await response.Content.ReadAsStringAsync();
+                await JS.InvokeVoidAsync("localStorage.setItem", "authToken", token.Trim('"'));
+                await JS.InvokeVoidAsync("localStorage.setItem", "userEmail", registerModel.Email);
+                Nav.NavigateTo("/vitrine");
+            }
+            else
+            {
+                error = await response.Content.ReadAsStringAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+}
