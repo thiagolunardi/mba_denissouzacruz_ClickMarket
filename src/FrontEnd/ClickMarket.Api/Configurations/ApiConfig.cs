@@ -14,6 +14,16 @@ public static class ApiConfig
                 options.SuppressModelStateInvalidFilter = true;
             });
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("Total",
+                builder =>
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+        });
+
         return builder;
     }
 }

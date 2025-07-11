@@ -8,6 +8,14 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+// Registra HttpClient para ser injetado nos componentes (pré-render e interativo)
+builder.Services.AddHttpClient("Api", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7251/");
+});
+// Serviço padrão sem nome
+builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Api"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,0 +1,34 @@
+@rendermode InteractiveAuto
+@using Microsoft.AspNetCore.Components
+@inject IJSRuntime JS
+@inject NavigationManager Nav
+
+@if (string.IsNullOrEmpty(userEmail))
+{
+    <NavLink class="btn btn-link" href="login">Login</NavLink>
+    <NavLink class="btn btn-link" href="register">Cadastro</NavLink>
+}
+else
+{
+    <span>Olá, @userEmail</span>
+    <button class="btn btn-link" @onclick="Logout">Sair</button>
+}
+
+@code {
+    private string? userEmail;
+    private bool initialized = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        userEmail = await JS.InvokeAsync<string>("localStorage.getItem", "userEmail");
+        StateHasChanged();
+    }
+
+    private async Task Logout()
+    {
+        await JS.InvokeVoidAsync("localStorage.removeItem", "authToken");
+        await JS.InvokeVoidAsync("localStorage.removeItem", "userEmail");
+        userEmail = null;
+        Nav.NavigateTo("/");
+    }
+}

@@ -22,6 +22,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Serve arquivos estaticos da própria aplicação (wwwroot padrão)
+app.UseStaticFiles();
+
+// Serve imagens enviadas (diretório configurado em appsettings)
+var imagensPath = Path.Combine(builder.Configuration["Parametros:DiretorioBaseImagemProduto"], "wwwroot");
+if (Directory.Exists(imagensPath))
+{
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(imagensPath),
+        RequestPath = ""
+    });
+}
+
+app.UseCors("Total");
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
