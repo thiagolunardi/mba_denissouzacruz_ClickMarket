@@ -26,6 +26,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Categorias" asp-action="Index">Categorias</a>
                         </li>
+                        <li class="nav-item"></li>
+                        
+                        @* TODO: ajustar quando implementar a claim: exibir este menu apenas se o usuário for Admin (via claim) *@
+                        <a class="nav-link text-dark" asp-controller="Admin" asp-action="Vendedores">Vendedores</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
