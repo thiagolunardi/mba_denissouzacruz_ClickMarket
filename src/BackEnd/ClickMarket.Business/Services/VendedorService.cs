@@ -31,5 +31,20 @@ namespace ClickMarket.Business.Services
             _vendedorRepository?.Dispose();
             GC.SuppressFinalize(this);
         }
+
+        public async Task<IEnumerable<Vendedor>> ObterTodosAsync()
+        {
+            return await _vendedorRepository.ObterTodosAsync();
+        }
+
+        public async Task InativarOuReativarAsync(Guid id)
+        {
+            var vendedor = await _vendedorRepository.ObterPorId(id);
+            if (vendedor == null) return;
+
+            vendedor.Ativo = !vendedor.Ativo;
+            await _vendedorRepository.Atualizar(vendedor);
+        }
+      
     }
 }
