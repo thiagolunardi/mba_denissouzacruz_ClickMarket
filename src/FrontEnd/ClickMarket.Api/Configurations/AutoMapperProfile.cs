@@ -19,5 +19,7 @@ public class AutoMapperProfile : Profile
 
         CreateMap<ClienteRequest, Cliente>();
         CreateMap<Cliente, ClienteDto>();
+        CreateMap<Favorito, FavoritoDto>();
+        CreateMap<Produto, ProdutoDto>();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using ClickMarket.Business.Models;
 using ClickMarket.Data.Mappings;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClickMarket.Data.Context
@@ -11,12 +10,16 @@ namespace ClickMarket.Data.Context
         public DbSet<Vendedor> Vendedores { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Favorito> Favoritos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProdutoMapping());
             modelBuilder.ApplyConfiguration(new CategoriaMapping());
             modelBuilder.ApplyConfiguration(new VendedorMapping());
+
+            modelBuilder.Entity<Produto>().HasQueryFilter(p => p.Ativo);
+
             base.OnModelCreating(modelBuilder);
         }
     }

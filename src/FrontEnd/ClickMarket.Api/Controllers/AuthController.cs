@@ -13,24 +13,17 @@ namespace ClickMarket.Api.Controllers;
 
 [ApiController]
 [Route("api/conta")]
-public class AuthController : MainController
+public class AuthController(SignInManager<IdentityUser> signInManager,
+                       UserManager<IdentityUser> userManager,
+                       IOptions<JwtSettings> jwtSettings,
+                       IClienteService clienteService,
+                       INotificador notificador,
+                       IUser user) : MainController(notificador, user)
 {
-    private readonly SignInManager<IdentityUser> _signInManager;
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly JwtSettings _jwtSettings;
-    private readonly IClienteService _clienteService;
-
-    public AuthController(SignInManager<IdentityUser> signInManager,
-                           UserManager<IdentityUser> userManager,
-                           IOptions<JwtSettings> jwtSettings,
-                           IClienteService clienteService,
-                           INotificador notificador) : base(notificador)
-    {
-        _signInManager = signInManager;
-        _userManager = userManager;
-        _jwtSettings = jwtSettings.Value;
-        _clienteService = clienteService;
-    }
+    private readonly SignInManager<IdentityUser> _signInManager = signInManager;
+    private readonly UserManager<IdentityUser> _userManager = userManager;
+    private readonly JwtSettings _jwtSettings = jwtSettings.Value;
+    private readonly IClienteService _clienteService = clienteService;
 
     [HttpPost("registrar")]
     [ProducesResponseType(StatusCodes.Status200OK)]

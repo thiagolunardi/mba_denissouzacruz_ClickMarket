@@ -12,7 +12,7 @@ namespace ClickMarket.Data.Repository
 
         }
 
-         public async Task<IEnumerable<Vendedor>> ObterTodosAsync()
+        public async Task<IEnumerable<Vendedor>> ObterTodosAsync()
         {
             return await _dbSet.AsNoTracking().ToListAsync();
         }

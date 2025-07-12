@@ -1,4 +1,3 @@
-using ClickMarket.AppMvc.Models;
 using ClickMarket.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

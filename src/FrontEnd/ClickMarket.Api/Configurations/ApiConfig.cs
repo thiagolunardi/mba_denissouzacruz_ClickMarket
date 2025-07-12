@@ -1,6 +1,4 @@
-﻿using ClickMarket.Data.Context;
-
-namespace ClickMarket.Api.Configurations;
+﻿namespace ClickMarket.Api.Configurations;
 
 public static class ApiConfig
 {

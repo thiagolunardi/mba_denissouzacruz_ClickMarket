@@ -1,4 +1,3 @@
-using ClickMarket.Blazor.Client.Pages;
 using ClickMarket.Blazor.Components;
 
 var builder = WebApplication.CreateBuilder(args);
