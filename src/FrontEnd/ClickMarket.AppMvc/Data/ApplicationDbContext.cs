@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-
-namespace ClickMarket.AppMvc.Data
+﻿namespace ClickMarket.AppMvc.Data
 {
     //public class ApplicationDbContext : IdentityDbContext
     //{

@@ -1,4 +1,5 @@
-﻿using ClickMarket.Business.Interfaces;
+﻿using ClickMarket.Api.Extensions;
+using ClickMarket.Business.Interfaces;
 using ClickMarket.Business.Notificacoes;
 using ClickMarket.Business.Services;
 using ClickMarket.Data.Repository;
@@ -13,6 +14,7 @@ public static class DependencyInjectionConfig
         builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
         builder.Services.AddScoped<IVendedorRepository, VendedorRepository>();
         builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+        builder.Services.AddScoped<IFavoritoRepository, FavoritoRepository>();
 
         builder.Services.AddScoped<INotificador, Notificador>();
 
@@ -22,6 +24,7 @@ public static class DependencyInjectionConfig
         builder.Services.AddScoped<IClienteService, ClienteService>();
 
         builder.Services.AddHttpContextAccessor();
+        builder.Services.AddScoped<IUser, AspNetUser>();
 
         return builder;
     }

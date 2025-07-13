@@ -1,7 +1,4 @@
-﻿using ClickMarket.AppMvc.Data;
-using ClickMarket.Data.Configurations;
-using ClickMarket.Data.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using ClickMarket.Data.Configurations;
 
 namespace ClickMarket.AppMvc.Configurations
 {

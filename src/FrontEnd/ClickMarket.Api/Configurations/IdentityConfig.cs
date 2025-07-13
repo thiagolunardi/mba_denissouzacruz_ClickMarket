@@ -1,5 +1,4 @@
-﻿using ClickMarket.Api.Context;
-using ClickMarket.Data.Context;
+﻿using ClickMarket.Data.Context;
 using Microsoft.AspNetCore.Identity;
 
 namespace ClickMarket.Api.Configurations;

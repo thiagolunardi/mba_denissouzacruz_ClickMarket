@@ -45,6 +45,6 @@ namespace ClickMarket.Business.Services
             vendedor.Ativo = !vendedor.Ativo;
             await _vendedorRepository.Atualizar(vendedor);
         }
-      
+
     }
 }
