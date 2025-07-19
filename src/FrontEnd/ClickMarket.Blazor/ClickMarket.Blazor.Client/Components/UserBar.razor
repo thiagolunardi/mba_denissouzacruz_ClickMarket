@@ -11,24 +11,24 @@
 else
 {
     <span>Olá, @userEmail</span>
-    <button class="btn btn-link" @onclick="Logout">Sair</button>
+    @* <button class="btn btn-link" @onclick="Logout">Sair</button> *@
 }
 
 @code {
     private string? userEmail;
     private bool initialized = false;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        userEmail = await JS.InvokeAsync<string>("localStorage.getItem", "userEmail");
-        StateHasChanged();
-    }
+    // protected override async Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     userEmail = await JS.InvokeAsync<string>("localStorage.getItem", "userEmail");
+    //     StateHasChanged();
+    // }
 
-    private async Task Logout()
-    {
-        await JS.InvokeVoidAsync("localStorage.removeItem", "authToken");
-        await JS.InvokeVoidAsync("localStorage.removeItem", "userEmail");
-        userEmail = null;
-        Nav.NavigateTo("/");
-    }
+    // private async Task Logout()
+    // {
+    //     await JS.InvokeVoidAsync("localStorage.removeItem", "authToken");
+    //     await JS.InvokeVoidAsync("localStorage.removeItem", "userEmail");
+    //     userEmail = null;
+    //     Nav.NavigateTo("/");
+    // }
 }

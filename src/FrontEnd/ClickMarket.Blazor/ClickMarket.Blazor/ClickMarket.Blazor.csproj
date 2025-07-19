@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ClickMarket.Blazor.Client\ClickMarket.Blazor.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.17" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,7 @@
 using ClickMarket.Blazor.Components;
+using ClickMarket.Blazor.Security;
+using ClickMarket.Blazor.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,11 +10,27 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-// Registra HttpClient para ser injetado nos componentes (pré-render e interativo)
-builder.Services.AddHttpClient("Api", client =>
+builder.Services.AddScoped<CookieService>();
+builder.Services.AddScoped<AccessTokenService>();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddHttpClient("ClickMarketAPI", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7251/");
+    client.BaseAddress = new Uri("https://localhost:7251/api/");
 });
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication()
+    .AddScheme<CustomOptions, JWTAuthenticationHandler>(
+        "JWTAuth", options => { }
+    );
+builder.Services.AddScoped<JWTAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, JWTAuthenticationStateProvider>();
+builder.Services.AddCascadingAuthenticationState();
+//// Registra HttpClient para ser injetado nos componentes (pré-render e interativo)
+//builder.Services.AddHttpClient("Api", client =>
+//{
+//    client.BaseAddress = new Uri("https://localhost:7251/");
+//});
 // Serviço padrão sem nome
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Api"));
 
