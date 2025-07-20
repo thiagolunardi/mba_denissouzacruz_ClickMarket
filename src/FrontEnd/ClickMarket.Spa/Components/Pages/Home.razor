@@ -3,7 +3,6 @@
 @inject IJSRuntime JS
 
 @inject ProdutoService ProdutoService
-@inject ClienteService ClienteService
 
 <PageTitle>Home</PageTitle>
 
@@ -80,7 +79,7 @@ else
 
     private async Task SalvarNaLista(Guid produtoId)
     {
-        var retornoViewModel = await ClienteService.SalvarNaLista(produtoId);
+        var retornoViewModel = await ProdutoService.SalvarNaLista(produtoId);
 
         if (!retornoViewModel.Success)
         {
@@ -95,7 +94,7 @@ else
 
     private async Task RemoverDaLista(Guid produtoId)
     {
-        var retornoViewModel = await ClienteService.RemoverDaLista(produtoId);
+        var retornoViewModel = await ProdutoService.RemoverDaLista(produtoId);
         if (!retornoViewModel.Success)
         {
             await JS.InvokeAsync<string>("alert", string.Join("\n", retornoViewModel.Errors));

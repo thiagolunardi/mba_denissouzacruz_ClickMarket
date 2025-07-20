@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using ClickMarket.Api.Models;
+using ClickMarket.Business.Dtos;
 using ClickMarket.Business.Interfaces;
+using ClickMarket.Business.Models;
+using ClickMarket.Data.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +17,7 @@ namespace ClickMarket.Api.Controllers
     [Route("api/produtos")]
     public class ProdutosController : MainController
     {
+        private readonly IProdutoService _produtoService;
         private readonly IProdutoRepository _produtoRepository;
         private readonly ICategoriaRepository _categoriaRepository;
         private readonly IMapper _mapper;
@@ -24,12 +28,14 @@ namespace ClickMarket.Api.Controllers
                                     IMapper mapper,
                                     IConfiguration configuration,
                                     INotificador notificador,
-                                    IUser user) : base(notificador, user)
+                                    IUser user,
+                                    IProdutoService produtoService) : base(notificador, user)
         {
             _produtoRepository = produtoRepository;
             _categoriaRepository = categoriaRepository;
             _mapper = mapper;
             _configuration = configuration;
+            _produtoService = produtoService;
         }
 
         [AllowAnonymous]
@@ -37,7 +43,7 @@ namespace ClickMarket.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<Models.ProdutoListViewModel>> GetProduto(Guid id)
+        public async Task<ActionResult<ProdutoListViewModel>> GetProduto(Guid id)
         {
             var produto = await _produtoRepository.ObterProdutoCategoria(id);
 
@@ -51,11 +57,10 @@ namespace ClickMarket.Api.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.ProdutoListViewModel>>> GetProdutos()
+        public async Task<ActionResult<List<ProdutoListViewModel>>> GetProdutos()
         {
-            var usuarioId = UsuarioId;
-            var produtoCategoria = await _produtoRepository.ObterProdutoCategoria(usuarioId != Guid.Empty ? usuarioId: null);
-            var produtoModel = _mapper.Map<IEnumerable<Models.ProdutoListViewModel>>(produtoCategoria);
+            var produtoCategoria = await _produtoRepository.ObterTodosIncluindoFavoritos(UsuarioId != Guid.Empty ? UsuarioId : null);
+            var produtoModel = _mapper.Map<IEnumerable<ProdutoListViewModel>>(produtoCategoria);
 
             return produtoModel.ToList();
         }
@@ -171,6 +176,52 @@ namespace ClickMarket.Api.Controllers
 
             await _produtoRepository.Remover(id);
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("favoritos")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<FavoritoDto>))]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<List<ProdutoListViewModel>>> ObterFavoritos()
+        {
+            var produtos = await _produtoRepository.ObterTodosApenasFavoritos(UsuarioId);
+            var produtoModel = _mapper.Map<IEnumerable<ProdutoListViewModel>>(produtos);
+            return produtoModel.ToList();
+        }
+
+        [HttpPost("favoritos/{produtoId}")]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(FavoritoDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> AdicionarFavorito(Guid produtoId)
+        {
+            if (produtoId == Guid.Empty)
+            {
+                AdicionarErroProcessamento("O ID do produto não pode ser vazio.");
+                return CustomResponse();
+            }
+
+            var favorito = await _produtoService.AdicionarFavorito(produtoId, UsuarioId);
+
+            if (!OperacaoValida()) return CustomResponse();
+
+            return CustomResponse(favorito);
+        }
+
+        [HttpDelete("favoritos/{produtoId:Guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> RemoverFavorito(Guid produtoId)
+        {
+            var favorito = await _produtoService.ObterFavorito(produtoId, UsuarioId);
+            if (favorito == null)
+            {
+                return NotFound();
+            }
+            await _produtoService.RemoverFavorito(produtoId, UsuarioId);
+
+            return CustomResponse();
         }
 
         private ActionResult<ProdutoViewModel> ReturnValidationProblem()

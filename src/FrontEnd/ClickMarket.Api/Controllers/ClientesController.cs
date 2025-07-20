@@ -36,66 +36,6 @@ namespace ClickMarket.Api.Controllers
 
             return CustomResponse(cliente);
         }
-
-        [HttpGet]
-        [Route("favoritos")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<FavoritoDto>))]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> ObterFavoritos()
-        {
-            var favoritos = await clienteService.ObterTodosFavoritos(UsuarioId);
-            return CustomResponse(favoritos);
-        }
-
-        [HttpGet]
-        [Route("favoritos/{produtoId}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FavoritoDto))]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> ObterFavoritoPorId(Guid produtoId)
-        {
-            var favorito = await clienteService.ObterFavoritoPorIds(produtoId, UsuarioId);
-            if (favorito == null)
-            {
-                return NotFound();
-            }
-            return CustomResponse(favorito);
-        }
-
-        [HttpPost("favoritos/{produtoId}")]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(FavoritoDto))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> AdicionarFavorito(Guid produtoId)
-        {
-            if (produtoId == Guid.Empty)
-            {
-                AdicionarErroProcessamento("O ID do produto não pode ser vazio.");
-                return CustomResponse();
-            }
-
-            var favorito = await clienteService.AdicionarFavorito(produtoId, UsuarioId);
-
-            if (!OperacaoValida()) return CustomResponse();
-
-            return CustomResponse(favorito);
-        }
-
-        [HttpDelete("favoritos/{produtoId:Guid}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> RemoverFavorito(Guid produtoId)
-        {
-            var favorito = await clienteService.ObterFavoritoPorIds(produtoId, UsuarioId);
-            if (favorito == null)
-            {
-                return NotFound();
-            }
-            await clienteService.RemoverFavorito(favorito.Id);
-
-            return CustomResponse();
-        }
     }
 
 }

@@ -10,7 +10,6 @@ public class ClienteService(
     INotificador notificador,
     IClienteRepository clienteRepository,
     IProdutoRepository produtoRepository,
-    IFavoritoRepository favoritoRepository,
     IMapper mapper) : BaseService(notificador), IClienteService
 {
     public async Task<Cliente> Adicionar(ClienteRequest request)
@@ -96,80 +95,6 @@ public class ClienteService(
     public async Task Remover(Guid id)
     {
         await clienteRepository.Remover(id);
-    }
-
-
-    public async Task<IEnumerable<FavoritoDto>> ObterTodosFavoritos(Guid clienteId)
-    {
-        //Regra de negócio
-        var models = await favoritoRepository.ObterTodosAtivos(clienteId);
-
-        return mapper.Map<List<Favorito>, List<FavoritoDto>>(models);
-    }
-
-    public async Task<FavoritoDto> ObterFavoritoPorIds(Guid produtoId, Guid clienteId)
-    {
-        if (produtoId == Guid.Empty)
-        {
-            Notificar("O do Produto não pode ser vazio.");
-            return null;
-        }
-
-        if (clienteId == Guid.Empty)
-        {
-            Notificar("O ID do Cliente não pode ser vazio.");
-            return null;
-        }
-        var favorito = await favoritoRepository.ObterPorProdutoCliente(produtoId, clienteId);
-        if (favorito == null)
-        {
-            Notificar("Favorito não encontrado.");
-            return null;
-        }
-        return mapper.Map<Favorito, FavoritoDto>(favorito);
-    }
-
-    public async Task<Favorito> AdicionarFavorito(Guid produtoId, Guid clienteId)
-    {
-        var favorito = new Favorito
-        {
-            Id = Guid.NewGuid(),
-            ProdutoId = produtoId,
-            ClienteId = clienteId
-        };
-
-        var modelExistente = await favoritoRepository.ObterPorProdutoCliente(produtoId, clienteId);
-
-        if (modelExistente != null)
-        {
-            Notificar("Este produto já está na lista de favoritos.");
-            return null;
-        }
-
-        var produto = await produtoRepository.ObterPorId(produtoId);
-
-        if (produto == null)
-        {
-            Notificar("Produto não encontrado ou não está ativo.");
-            return null;
-        }
-
-        await favoritoRepository.Adicionar(favorito);
-
-        return favorito;
-    }
-
-    public async Task RemoverFavorito(Guid id)
-    {
-        var favorito = await favoritoRepository.ObterPorId(id);
-
-        if (favorito == null)
-        {
-            Notificar("Favorito não encontrado.");
-            return;
-        }
-
-        await favoritoRepository.Remover(id);
     }
 
     public void Dispose()

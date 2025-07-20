@@ -11,10 +11,4 @@ public interface IClienteService : IDisposable
     Task<Cliente> Adicionar(ClienteRequest cliente);
     Task<Cliente> Atualizar(Guid id, ClienteRequest cliente);
     Task Remover(Guid id);
-
-
-    Task<IEnumerable<FavoritoDto>> ObterTodosFavoritos(Guid clienteId);
-    Task<FavoritoDto> ObterFavoritoPorIds(Guid id, Guid clienteId);
-    Task<Favorito> AdicionarFavorito(Guid produtoId, Guid clienteId);
-    Task RemoverFavorito(Guid id);
 }
