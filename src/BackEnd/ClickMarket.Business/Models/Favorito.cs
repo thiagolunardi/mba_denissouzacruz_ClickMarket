@@ -7,5 +7,4 @@ public class Favorito : EntityBase
 
     //EF Relations
     public Cliente Cliente { get; set; }
-    public Produto Produto { get; set; }
 }

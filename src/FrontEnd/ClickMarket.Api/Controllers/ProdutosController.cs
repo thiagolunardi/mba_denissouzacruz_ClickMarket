@@ -4,6 +4,7 @@ using ClickMarket.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System.Security.Claims;
 
 namespace ClickMarket.Api.Controllers
@@ -11,7 +12,7 @@ namespace ClickMarket.Api.Controllers
     [Authorize]
     [ApiController]
     [Route("api/produtos")]
-    public class ProdutosController : ControllerBase
+    public class ProdutosController : MainController
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly ICategoriaRepository _categoriaRepository;
@@ -21,7 +22,9 @@ namespace ClickMarket.Api.Controllers
         public ProdutosController(IProdutoRepository produtoRepository,
                                     ICategoriaRepository categoriaRepository,
                                     IMapper mapper,
-                                    IConfiguration configuration)
+                                    IConfiguration configuration,
+                                    INotificador notificador,
+                                    IUser user) : base(notificador, user)
         {
             _produtoRepository = produtoRepository;
             _categoriaRepository = categoriaRepository;
@@ -50,7 +53,8 @@ namespace ClickMarket.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Models.ProdutoListViewModel>>> GetProdutos()
         {
-            var produtoCategoria = await _produtoRepository.ObterProdutoCategoria();
+            var usuarioId = UsuarioId;
+            var produtoCategoria = await _produtoRepository.ObterProdutoCategoria(usuarioId != Guid.Empty ? usuarioId: null);
             var produtoModel = _mapper.Map<IEnumerable<Models.ProdutoListViewModel>>(produtoCategoria);
 
             return produtoModel.ToList();

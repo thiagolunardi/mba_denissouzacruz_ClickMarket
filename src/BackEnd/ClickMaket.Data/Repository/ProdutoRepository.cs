@@ -12,11 +12,13 @@ namespace ClickMarket.Data.Repository
 
         }
 
-        public async Task<IEnumerable<Produto>> ObterProdutoCategoria()
+        public async Task<IEnumerable<Produto>> ObterProdutoCategoria(Guid? clienteId = null)
         {
             return await _dbSet.AsNoTracking()
                     .Include(x => x.Categoria)
                     .Include(x => x.Vendedor)
+                    .Include(x => x.Favorito)
+                    .Where(x => !clienteId.HasValue || x.Favorito.ClienteId == clienteId || x.Favorito == null)
                     .ToListAsync();
         }
 

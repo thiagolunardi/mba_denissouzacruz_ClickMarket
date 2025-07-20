@@ -12,6 +12,8 @@ builder.Services.AddRazorComponents()
 builder.Services.AddScoped<CookieService>();
 builder.Services.AddScoped<AccessTokenService>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<ProdutoService>();
+builder.Services.AddScoped<ClienteService>();
 builder.Services.AddHttpClient("ClickMarketAPI", client =>
 {
     client.BaseAddress = new Uri("https://localhost:7251/api/");
@@ -25,8 +27,6 @@ builder.Services.AddAuthentication()
 builder.Services.AddScoped<JWTAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, JWTAuthenticationStateProvider>();
 builder.Services.AddCascadingAuthenticationState();
-
-builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Api"));
 
 var app = builder.Build();
 

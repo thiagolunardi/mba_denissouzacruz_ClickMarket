@@ -14,7 +14,7 @@ public interface IClienteService : IDisposable
 
 
     Task<IEnumerable<FavoritoDto>> ObterTodosFavoritos(Guid clienteId);
-    Task<FavoritoDto> ObterFavoritoPorId(Guid id);
+    Task<FavoritoDto> ObterFavoritoPorIds(Guid id, Guid clienteId);
     Task<Favorito> AdicionarFavorito(Guid produtoId, Guid clienteId);
     Task RemoverFavorito(Guid id);
 }

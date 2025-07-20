@@ -34,6 +34,8 @@ namespace ClickMarket.Api.Models
 
         public string Imagem { get; set; }
 
+        public bool AddListaDesejos { get; set; }
+
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [DisplayName("Categoria")]
         public Guid CategoriaId { get; set; }

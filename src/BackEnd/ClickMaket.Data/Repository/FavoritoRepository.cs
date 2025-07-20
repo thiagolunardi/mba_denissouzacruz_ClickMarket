@@ -10,7 +10,6 @@ public class FavoritoRepository(ClickDbContext context) : Repository<Favorito>(c
     public async Task<Favorito> ObterPorProdutoCliente(Guid produtoId, Guid clienteId)
     {
         return await _dbSet.AsNoTracking()
-            .Include(a => a.Produto)
             .Include(a => a.Cliente)
             .FirstOrDefaultAsync(a => a.ProdutoId == produtoId && a.ClienteId == clienteId);
     }
@@ -18,9 +17,8 @@ public class FavoritoRepository(ClickDbContext context) : Repository<Favorito>(c
     public async Task<List<Favorito>> ObterTodosAtivos(Guid clienteId)
     {
         return await _dbSet.AsNoTracking()
-            .Include(a => a.Produto)
             .Include(a => a.Cliente)
-            .Where(a => a.ClienteId.Equals(clienteId) && a.Produto.Ativo)
+            .Where(a => a.ClienteId.Equals(clienteId))
             .ToListAsync();
     }
 }

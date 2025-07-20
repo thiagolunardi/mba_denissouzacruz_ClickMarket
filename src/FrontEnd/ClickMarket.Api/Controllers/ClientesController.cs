@@ -48,13 +48,13 @@ namespace ClickMarket.Api.Controllers
         }
 
         [HttpGet]
-        [Route("favoritos/{id}")]
+        [Route("favoritos/{produtoId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FavoritoDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> ObterFavoritoPorId(Guid id)
+        public async Task<IActionResult> ObterFavoritoPorId(Guid produtoId)
         {
-            var favorito = await clienteService.ObterFavoritoPorId(id);
+            var favorito = await clienteService.ObterFavoritoPorIds(produtoId, UsuarioId);
             if (favorito == null)
             {
                 return NotFound();
@@ -75,25 +75,26 @@ namespace ClickMarket.Api.Controllers
             }
 
             var favorito = await clienteService.AdicionarFavorito(produtoId, UsuarioId);
-            
+
             if (!OperacaoValida()) return CustomResponse();
 
-            return CreatedAtAction(nameof(ObterFavoritoPorId), new { id = favorito.Id }, favorito);
+            return CustomResponse(favorito);
         }
 
-        [HttpDelete("favoritos/{id:Guid}")]
+        [HttpDelete("favoritos/{produtoId:Guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> RemoverFavorito(Guid id)
+        public async Task<IActionResult> RemoverFavorito(Guid produtoId)
         {
-            var favorito = await clienteService.ObterFavoritoPorId(id);
+            var favorito = await clienteService.ObterFavoritoPorIds(produtoId, UsuarioId);
             if (favorito == null)
             {
                 return NotFound();
             }
-            await clienteService.RemoverFavorito(id);
-            return NoContent();
+            await clienteService.RemoverFavorito(favorito.Id);
+
+            return CustomResponse();
         }
     }
 

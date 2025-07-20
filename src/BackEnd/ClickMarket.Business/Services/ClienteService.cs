@@ -107,14 +107,20 @@ public class ClienteService(
         return mapper.Map<List<Favorito>, List<FavoritoDto>>(models);
     }
 
-    public async Task<FavoritoDto> ObterFavoritoPorId(Guid id)
+    public async Task<FavoritoDto> ObterFavoritoPorIds(Guid produtoId, Guid clienteId)
     {
-        if (id == Guid.Empty)
+        if (produtoId == Guid.Empty)
         {
-            Notificar("O ID do favorito não pode ser vazio.");
+            Notificar("O do Produto não pode ser vazio.");
             return null;
         }
-        var favorito = await favoritoRepository.ObterPorId(id);
+
+        if (clienteId == Guid.Empty)
+        {
+            Notificar("O ID do Cliente não pode ser vazio.");
+            return null;
+        }
+        var favorito = await favoritoRepository.ObterPorProdutoCliente(produtoId, clienteId);
         if (favorito == null)
         {
             Notificar("Favorito não encontrado.");

@@ -10,11 +10,13 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        CreateMap<CategoriaViewModel, Business.Models.Categoria>().ReverseMap();
-        CreateMap<CategoriaListViewModel, Business.Models.Categoria>().ReverseMap();
-        CreateMap<ProdutoViewModel, Business.Models.Produto>().ReverseMap();
-        CreateMap<ProdutoListViewModel, Business.Models.Produto>().ReverseMap();
-        CreateMap<VendedorViewModel, Business.Models.Vendedor>().ReverseMap();
+        CreateMap<CategoriaViewModel, Categoria>().ReverseMap();
+        CreateMap<CategoriaListViewModel, Categoria>().ReverseMap();
+        CreateMap<ProdutoViewModel, Produto>().ReverseMap();
+        CreateMap<ProdutoListViewModel, Produto>();
+        CreateMap<Produto, ProdutoListViewModel>()
+            .ForMember(dest => dest.AddListaDesejos, opt => opt.MapFrom(src => src.Favorito != null));
+        CreateMap<VendedorViewModel, Vendedor>().ReverseMap();
 
 
         CreateMap<ClienteRequest, Cliente>();
