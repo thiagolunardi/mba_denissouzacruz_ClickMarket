@@ -67,6 +67,16 @@ public abstract class MainController : ControllerBase
         }
     }
 
+    protected ActionResult CustomResponse(Dictionary<string, string[]> erros)
+    {
+        foreach (var erro in erros)
+        {
+            AdicionarErroProcessamento(string.Join("\n", erro.Value));
+        }
+
+        return CustomResponse();
+    }
+
     protected void NotificarErro(string mensagem)
     {
         _notificador.Handle(new Notificacao(mensagem));

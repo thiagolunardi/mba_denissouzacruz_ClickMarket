@@ -29,11 +29,11 @@ namespace ClickMarket.Data.Configurations
                 await contextID.Database.MigrateAsync();
                 await contextClick.Database.MigrateAsync();
 
-                await EnsureSeedProducts(contextID, contextClick);
+                await EnsureSeedProducts(contextID, contextClick, scope.ServiceProvider);
             }
         }
 
-        private static async Task EnsureSeedProducts(ApplicationDbContext identityDb, ClickDbContext clickDb)
+        private static async Task EnsureSeedProducts(ApplicationDbContext identityDb, ClickDbContext clickDb, IServiceProvider serviceProvider)
         {
             //Realiza a carga inicial dos dados
             if (clickDb.Categorias.Any())
@@ -57,6 +57,29 @@ namespace ClickMarket.Data.Configurations
             });
 
             await identityDb.SaveChangesAsync();
+
+            var roleManager = serviceProvider.GetRequiredService<Microsoft.AspNetCore.Identity.RoleManager<Microsoft.AspNetCore.Identity.IdentityRole>>();
+
+            if (!await roleManager.RoleExistsAsync("Administrador"))
+            {
+                await roleManager.CreateAsync(new Microsoft.AspNetCore.Identity.IdentityRole("Administrador"));
+            }
+            if (!await roleManager.RoleExistsAsync("Vendedor"))
+            {
+                await roleManager.CreateAsync(new Microsoft.AspNetCore.Identity.IdentityRole("Vendedor"));
+            }
+            if (!await roleManager.RoleExistsAsync("Cliente"))
+            {
+                await roleManager.CreateAsync(new Microsoft.AspNetCore.Identity.IdentityRole("Cliente"));
+            }
+
+            //set role Administrador for user
+            var userManager = serviceProvider.GetRequiredService<Microsoft.AspNetCore.Identity.UserManager<Microsoft.AspNetCore.Identity.IdentityUser>>();
+            var user = await userManager.FindByIdAsync(idUsuario.ToString());
+            if (user != null)
+            {
+                await userManager.AddToRoleAsync(user, "Administrador");
+            }
 
             clickDb.Vendedores.Add(new Business.Models.Vendedor() { Id = idUsuario, Nome = "Teste", Email = "teste@teste.com" });
             await clickDb.SaveChangesAsync();
