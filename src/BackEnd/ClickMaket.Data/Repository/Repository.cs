@@ -56,7 +56,15 @@ namespace ClickMarket.Data.Repository
 
         public async Task<int> SaveChanges()
         {
-            return await _clickDb.SaveChangesAsync();
+            try
+            {
+                return await _clickDb.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public void Dispose()

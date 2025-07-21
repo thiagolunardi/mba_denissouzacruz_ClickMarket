@@ -39,6 +39,11 @@
                 <span asp-validation-for="QuantidadeEstoque" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.Ativo) Ativo?
+                </div>
+            </div>
+            <div class="form-group">
                 <img src="~/images/upload/@Model.Imagem" alt="@Model.Imagem" style="width: 140px; height: 200px;" />
             </div>
             <div class="form-group">
@@ -61,5 +66,26 @@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
     }
+    <script>
+        $(function () {
+                var $input = $('input[name="UploadImagem"]');
+
+                // Remove os atributos de validação automática
+                $input.removeAttr("data-val");
+                $input.removeAttr("data-val-required");
+
+                // Remove regras caso o jQuery Validation já tenha carregado
+                if ($input.rules) {
+                    $input.rules("remove");
+                }
+
+                // Reparse o form para refletir as alterações
+                var $form = $input.closest("form");
+                $form.removeData("validator");
+                $form.removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse($form);
+        });
+    </script>
 }

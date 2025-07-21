@@ -5,6 +5,7 @@ using ClickMarket.Business.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.Security.Claims;
 
 namespace ClickMarket.AppMvc.Controllers
@@ -87,6 +88,7 @@ namespace ClickMarket.AppMvc.Controllers
                 Guid idVendedor = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 produto.VendedorId = idVendedor;
                 produto.Imagem = nomeImagem;
+
                 await _produtoRepository.Adicionar(produto);
 
                 return RedirectToAction(nameof(Index));
@@ -120,19 +122,23 @@ namespace ClickMarket.AppMvc.Controllers
             if (id != produtoViewModel.Id)
                 return NotFound();
 
+            ModelState.Remove("UploadImagem");
+
             if (ModelState.IsValid)
             {
                 try
                 {
                     var produtoBase = await _produtoRepository.ObterPorId(id);
-                    produtoViewModel.Imagem = ObterNomeImagemUpload(produtoViewModel);
+                    produtoViewModel.Imagem = produtoBase.Imagem;
 
-                    if (!await SalvarImagem(produtoViewModel.UploadImagem, produtoViewModel.Imagem))
+                    if (produtoViewModel.UploadImagem != null)
                     {
-                        produtoViewModel.Categorias = await CarregarCategorias();
-                        return View(produtoViewModel);
+                        if (!await SalvarImagem(produtoViewModel.UploadImagem, produtoViewModel.Imagem))
+                        {
+                            produtoViewModel.Categorias = await CarregarCategorias();
+                            return View(produtoViewModel);
+                        }
                     }
-                    ExcluirImagem(produtoBase.Imagem);
 
                     var produto = _mapper.Map<Produto>(produtoViewModel);
 
@@ -142,6 +148,7 @@ namespace ClickMarket.AppMvc.Controllers
                     produtoBase.CategoriaId = produtoViewModel.CategoriaId;
                     produtoBase.QuantidadeEstoque = produtoViewModel.QuantidadeEstoque;
                     produtoBase.Imagem = produtoViewModel.Imagem;
+                    produtoBase.Ativo = produtoViewModel.Ativo;
                     await _produtoRepository.Atualizar(produtoBase);
                 }
                 catch (DbUpdateConcurrencyException)
