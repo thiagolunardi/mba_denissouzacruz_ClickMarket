@@ -1,4 +1,5 @@
-﻿using ClickMarket.Data.Context;
+﻿using ClickMarket.Api.Extensions;
+using ClickMarket.Data.Context;
 using Microsoft.AspNetCore.Identity;
 
 namespace ClickMarket.Api.Configurations;
@@ -9,6 +10,7 @@ public static class IdentityConfig
     {
         builder.Services.AddIdentity<IdentityUser, IdentityRole>()
             .AddRoles<IdentityRole>()
+            .AddErrorDescriber<IdentityMensagensPortugues>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
         return builder;

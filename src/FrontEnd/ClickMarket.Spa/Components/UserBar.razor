@@ -1,0 +1,34 @@
+﻿@rendermode InteractiveServer
+
+@inject AuthService AuthService
+
+<AuthorizeView>
+    <Authorized>
+            Olá @Email <NavLink class="btn btn-link" href="javascript:;" @onclick="Logout">Sair</NavLink>
+    </Authorized>
+    <NotAuthorized>
+        <NavLink class="btn btn-link" href="login">Entrar</NavLink>
+        <NavLink class="btn btn-link" href="register">Cadastro</NavLink>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    public string Email { get; set; }
+    public string Role { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await InitialValues();
+    }
+
+    private async Task InitialValues()
+    {
+        Email = await AuthService.ObterUserEmail();
+        Role = await AuthService.ObterUserRole();
+    }
+
+    private async Task Logout()
+    {
+        await AuthService.Logout();
+    }
+}

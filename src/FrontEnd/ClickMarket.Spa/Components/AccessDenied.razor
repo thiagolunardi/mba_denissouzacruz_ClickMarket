@@ -1,0 +1,25 @@
+﻿@page "/access-denied"
+@rendermode InteractiveServer
+@inject AuthService AuthService
+<h3 style="color:red">Acesso Negado: Role @Role</h3>
+
+@code {
+    public string Email { get; set; }
+    public string Role { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await InitialValues();
+    }
+
+    private async Task InitialValues()
+    {
+        Email = await AuthService.ObterUserEmail();
+        Role = await AuthService.ObterUserRole();
+    }
+
+    private async Task Logout()
+    {
+        await AuthService.Logout();
+    }
+}

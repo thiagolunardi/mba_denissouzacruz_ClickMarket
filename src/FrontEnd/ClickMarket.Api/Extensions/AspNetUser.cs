@@ -44,7 +44,7 @@ public static class ClaimsPrincipalExtensions
             throw new ArgumentException(null, nameof(principal));
         }
 
-        var claim = principal.FindFirst(ClaimTypes.NameIdentifier);
+        var claim = principal.FindFirst(ClaimTypes.Sid);
         return claim?.Value;
     }
 

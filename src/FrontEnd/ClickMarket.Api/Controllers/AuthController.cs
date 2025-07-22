@@ -32,8 +32,9 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
     public async Task<ActionResult> Registrar(RegisterUserViewModel registerUserViewModel)
     {
         if (!ModelState.IsValid)
-            return ValidationProblem(new ValidationProblemDetails(ModelState)
-            { Title = "Ocorreu um erro ao cadastrar o cliente!" });
+        {
+            return CustomResponse(ModelState);
+        }
 
         var user = new IdentityUser()
         {
@@ -47,6 +48,8 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
         {
             await _signInManager.SignInAsync(user, false);
 
+            await _userManager.AddToRoleAsync(user, "Cliente");
+
             var cliente = await _clienteService.Adicionar(new ClienteRequest
             {
                 Id = Guid.Parse(user.Id),
@@ -56,11 +59,12 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
 
             if (cliente == null)
             {
+                AdicionarErroProcessamento("Ocorreu um erro ao salvar os dados do Cliente.");
                 await _userManager.DeleteAsync(user);
                 return CustomResponse();
             }
 
-            return Ok(GerarJwt(registerUserViewModel.Email));
+            return CustomResponse(GerarJwt(registerUserViewModel.Email));
         }
 
         var errors = result.Errors
@@ -70,9 +74,7 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
                         g => g.Select(e => e.Description).ToArray()
                     );
 
-        return ValidationProblem(new ValidationProblemDetails(errors)
-        { Title = "Ocorreu um erro ao cadastrar o usuário!" });
-
+        return CustomResponse(errors);
     }
 
     [HttpPost("login")]
@@ -88,21 +90,20 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
 
         var result = await _signInManager.PasswordSignInAsync(userLoginViewModel.Email, userLoginViewModel.Password, false, true);
 
-        if (result.Succeeded)
+        if (!result.Succeeded)
         {
-            return Ok(GerarJwt(userLoginViewModel.Email));
+            AdicionarErroProcessamento("Usuário ou senha inválidos!");
+            return CustomResponse();
         }
 
-        return Problem("Usuário ou senha inválidos!");
+        return CustomResponse(GerarJwt(userLoginViewModel.Email));
     }
 
     private string GerarJwt(string email)
     {
-        var user = _userManager.FindByEmailAsync(email);
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Result?.Id ?? Guid.Empty.ToString())
-        };
+        var user = _userManager.FindByEmailAsync(email).Result;
+        
+        var claims = CarregarClaimsUsuario(user).Result;
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_jwtSettings.Segredo ?? string.Empty);
@@ -120,5 +121,17 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
 
         var encodedToken = tokenHandler.WriteToken(token);
         return encodedToken;
+    }
+
+    private async Task<IList<Claim>> CarregarClaimsUsuario(IdentityUser user)
+    {
+        var claims = await _userManager.GetClaimsAsync(user);
+        var userRoles = await _userManager.GetRolesAsync(user);
+
+        claims.Add(new Claim(ClaimTypes.Sid, user.Id));
+        claims.Add(new Claim(ClaimTypes.Email, user.Email));
+        claims.Add(new Claim(ClaimTypes.Role, userRoles.FirstOrDefault() ?? string.Empty));
+
+        return claims;
     }
 }

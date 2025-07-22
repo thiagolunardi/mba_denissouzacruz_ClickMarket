@@ -12,4 +12,5 @@ public class Produto : EntityBase
     public bool Ativo { get; set; } = true;
     public Categoria Categoria { get; set; }
     public Vendedor Vendedor { get; set; }
+    public Favorito Favorito { get; set; }
 }
