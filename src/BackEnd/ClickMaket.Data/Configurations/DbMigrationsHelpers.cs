@@ -116,7 +116,8 @@ namespace ClickMarket.Data.Configurations
                     VendedorId = idUsuario,
                     Imagem = "5be38508-8799-4625-8c68-77100b36c7fc-Acabana.jpg",
                     Valor = 30,
-                    QuantidadeEstoque = 245
+                    QuantidadeEstoque = 245,
+                    Ativo = true
                 },
                 new Business.Models.Produto()
                 {
@@ -127,7 +128,8 @@ namespace ClickMarket.Data.Configurations
                     VendedorId = idUsuario,
                     Imagem = "6afb183a-744b-4f99-b394-6180f9d3b1dd-teclado_logi.png",
                     Valor = 122,
-                    QuantidadeEstoque = 198
+                    QuantidadeEstoque = 198,
+                    Ativo = true
                 }
             );
 

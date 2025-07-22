@@ -9,6 +9,7 @@ namespace ClickMarket.AppMvc.ViewModels
         public ProdutoViewModel()
         {
             Id = Guid.NewGuid();
+            Ativo = true;
         }
 
         [Key]
@@ -40,11 +41,11 @@ namespace ClickMarket.AppMvc.ViewModels
         public Guid? VendedorId { get; set; }
         public string? Imagem { get; set; }
 
-        [Required(ErrorMessage = "Preencha o campo {0}.")]
         [DisplayName("Imagem do produto")]
         public IFormFile UploadImagem { get; set; }
         public CategoriaViewModel? Categoria { get; set; }
         public IEnumerable<CategoriaViewModel>? Categorias { get; set; }
         public Vendedor? Vendedor { get; set; }
+        public bool Ativo { get; set; }
     }
 }
