@@ -1,5 +1,4 @@
 ﻿using ClickMarket.Spa.Models;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
 
 namespace ClickMarket.Spa.Services;
