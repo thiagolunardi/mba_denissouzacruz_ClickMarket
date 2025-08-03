@@ -7,21 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Remove="wwwroot\imagens\5be38508-8799-4625-8c68-77100b36c7fc-Acabana.jpg" />
-	  <Content Remove="wwwroot\imagens\6afb183a-744b-4f99-b394-6180f9d3b1dd-teclado_logi.png" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="wwwroot\imagens\5be38508-8799-4625-8c68-77100b36c7fc-Acabana.jpg">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Include="wwwroot\imagens\6afb183a-744b-4f99-b394-6180f9d3b1dd-teclado_logi.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
 	</ItemGroup>
 
 	<ItemGroup>

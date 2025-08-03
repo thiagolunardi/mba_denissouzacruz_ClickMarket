@@ -1,4 +1,5 @@
 ﻿using ClickMarket.Api.Extensions;
+using ClickMarket.Business.Extensions;
 using ClickMarket.Business.Interfaces;
 using ClickMarket.Business.Notificacoes;
 using ClickMarket.Business.Services;

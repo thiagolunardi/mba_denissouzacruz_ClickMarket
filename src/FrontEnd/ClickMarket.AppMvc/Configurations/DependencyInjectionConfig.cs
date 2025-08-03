@@ -1,4 +1,5 @@
-﻿using ClickMarket.Business.Interfaces;
+﻿using ClickMarket.Business.Extensions;
+using ClickMarket.Business.Interfaces;
 using ClickMarket.Business.Services;
 using ClickMarket.Data.Repository;
 
@@ -13,6 +14,8 @@ namespace ClickMarket.AppMvc.Configurations
             builder.Services.AddScoped<IVendedorRepository, VendedorRepository>();
 
             builder.Services.AddScoped<IVendedorService, VendedorService>();
+
+            builder.Services.AddScoped<IUser, AspNetUser>();
 
             return builder;
         }

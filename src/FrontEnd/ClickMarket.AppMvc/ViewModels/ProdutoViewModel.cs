@@ -29,17 +29,18 @@ namespace ClickMarket.AppMvc.ViewModels
         public Guid CategoriaId { get; set; }
 
         [Required(ErrorMessage = "Preencha o campo {0}.")]
-        [Range(1, Int32.MaxValue, ErrorMessage = "O valor precisa ser maior que 0")]
+        [Range(1, double.MaxValue, ErrorMessage = "O valor precisa ser maior que 0")]
         [DisplayName("Preço")]
-        public int Valor { get; set; }
+        public decimal Valor { get; set; }
 
         [Required(ErrorMessage = "Preencha o campo {0}.")]
-        [Range(1, Int32.MaxValue, ErrorMessage = "O valor precisa ser maior que 0")]
+        [Range(1, int.MaxValue, ErrorMessage = "O valor precisa ser maior que 0")]
         [DisplayName("Qtd em Estoque")]
         public int QuantidadeEstoque { get; set; }
 
         public Guid? VendedorId { get; set; }
         public string? Imagem { get; set; }
+        public string? ImagemCaminho { get; set; }
 
         [DisplayName("Imagem do produto")]
         public IFormFile UploadImagem { get; set; }

@@ -1,8 +1,10 @@
 using ClickMarket.Business.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClickMarket.AppMvc.Controllers;
 
+[Authorize(Roles = "Administrador")]
 public class AdminController : Controller
 {
     private readonly IVendedorService _vendedorService;

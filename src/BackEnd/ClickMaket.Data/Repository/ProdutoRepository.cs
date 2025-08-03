@@ -7,6 +7,14 @@ namespace ClickMarket.Data.Repository
 {
     public class ProdutoRepository(ClickDbContext clickDbContext) : Repository<Produto>(clickDbContext), IProdutoRepository
     {
+        public async Task<List<Produto>> ObterTodosProdutos()
+        {
+            return await _dbSet.AsNoTracking()
+                    .Include(x => x.Categoria)
+                    .Include(x => x.Vendedor)
+                    .ToListAsync();
+        }
+
         public async Task<IEnumerable<Produto>> ObterProdutoCategoria(Guid? clienteId = null)
         {
             return await _dbSet.AsNoTracking()
@@ -26,7 +34,7 @@ namespace ClickMarket.Data.Repository
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<Produto>> ObterProdutoCategoriaPorVendedor(Guid vendedorId)
+        public async Task<List<Produto>> ObterProdutoPorVendedor(Guid vendedorId)
         {
             return await _dbSet
                         .AsNoTracking()

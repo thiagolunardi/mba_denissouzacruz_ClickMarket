@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-ClickMarket.AppMvc-59f7c195-9192-45fa-9383-014838faa63f</UserSecretsId>
   </PropertyGroup>
