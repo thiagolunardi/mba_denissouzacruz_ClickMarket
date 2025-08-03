@@ -36,7 +36,7 @@
     {
         <div class="col">
             <div class="card h-100 shadow-sm product-card">
-                <img src="~/images/upload/@item.Imagem" class="card-img-top" alt="@item.Nome" />
+                <img src="@item.ImagemCaminho" class="card-img-top" alt="@item.Nome" />
 
                 <div class="card-body p-2">
                     <h5 class="card-title">@item.Nome</h5>
@@ -49,6 +49,12 @@
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info"><i class="fa fa-search"></i></a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                 </div>
+                @if (User.IsInRole("Administrador"))
+                {
+                    <div class="card-footer d-flex justify-content-between p-2">
+                        <p class="card-text text-muted">@item.Vendedor.Nome</p>
+                    </div>
+                }
             </div>
         </div>
     }

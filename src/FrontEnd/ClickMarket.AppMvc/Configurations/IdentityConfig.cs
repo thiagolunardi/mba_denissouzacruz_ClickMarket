@@ -7,7 +7,9 @@ namespace ClickMarket.AppMvc.Configurations
     {
         public static WebApplicationBuilder AddIdentityConfig(this WebApplicationBuilder builder)
         {
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            builder.Services
+                .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 

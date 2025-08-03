@@ -12,38 +12,47 @@ namespace ClickMarket.AppMvc.Controllers
 {
     [Route("/", Order = 0)]
     [Route("gestao-produtos", Order = 1)]
-    [Authorize]
+    [Authorize(Roles = "Vendedor, Administrador")]
     public class ProdutosController : Controller
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IProdutoRepository _produtoRepository;
         private readonly ICategoriaRepository _categoriaRepository;
         private readonly IMapper _mapper;
+        public readonly IUser _appUser;
         private readonly IConfiguration _configuration;
 
         public ProdutosController(IProdutoRepository produtoRepository,
                                     ICategoriaRepository categoriaRepository,
                                     IMapper mapper,
                                     IWebHostEnvironment webHostEnvironment,
-                                    IConfiguration configuration)
+                                    IConfiguration configuration,
+                                    IUser appUser)
         {
             _produtoRepository = produtoRepository;
             _categoriaRepository = categoriaRepository;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
             _configuration = configuration;
+            _appUser = appUser;
         }
 
-        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            Guid idVendedor = User.FindFirstValue(ClaimTypes.NameIdentifier) == null ? Guid.NewGuid() : Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var produtoCategoria = await _produtoRepository.ObterProdutoCategoriaPorVendedor(idVendedor);
-            var produtoViewModel = _mapper.Map<IEnumerable<ProdutoViewModel>>(produtoCategoria);
-            return View(produtoViewModel);
+            Guid idVendedor = _appUser.GetUserId();
+            var produtos = new List<Produto>();
+            if (_appUser.IsInRole("Administrador"))
+            {
+                produtos = await _produtoRepository.ObterTodosProdutos();
+            }
+            else
+            {
+                produtos = await _produtoRepository.ObterProdutoPorVendedor(idVendedor);
+            }
+            var produtosViewModel = _mapper.Map<List<ProdutoViewModel>>(produtos);
+            return View(produtosViewModel);
         }
 
-        [AllowAnonymous]
         [HttpGet]
         [Route("detalhes/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
@@ -203,8 +212,12 @@ namespace ClickMarket.AppMvc.Controllers
             {
                 try
                 {
-                    string caminhoBase = Directory.GetCurrentDirectory();
-                    var caminhoUpload = Path.Combine(caminhoBase, "wwwroot", "images", "upload");
+                    string caminhoBase = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+                    var caminhoUpload = Path.Combine(caminhoBase, "ClickMarket.Spa", "wwwroot", "imagens");
+
+                    //Usar quando estiver rodando a aplicação sem o SPA
+                    //string caminhoBase = Directory.GetCurrentDirectory();
+                    //var caminhoUpload = Path.Combine(caminhoBase, "wwwroot", "images", "upload");
 
                     if (!Directory.Exists(caminhoUpload))
                         Directory.CreateDirectory(caminhoUpload);

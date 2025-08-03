@@ -1,7 +1,8 @@
 ﻿using ClickMarket.Business.Interfaces;
+using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
-namespace ClickMarket.Api.Extensions;
+namespace ClickMarket.Business.Extensions;
 
 public class AspNetUser(IHttpContextAccessor accessor) : IUser
 {

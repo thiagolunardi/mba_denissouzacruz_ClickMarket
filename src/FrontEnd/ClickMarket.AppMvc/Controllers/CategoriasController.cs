@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ClickMarket.AppMvc.Controllers
 {
     [Route("gestao-categorias")]
-    [Authorize]
+    [Authorize(Roles = "Vendedor,Administrador")]
     public class CategoriasController : Controller
     {
         private readonly ICategoriaRepository _categoriaRepository;
