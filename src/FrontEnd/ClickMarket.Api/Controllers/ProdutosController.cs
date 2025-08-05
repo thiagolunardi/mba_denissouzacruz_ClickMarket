@@ -59,7 +59,9 @@ namespace ClickMarket.Api.Controllers
         [HttpGet("categoria/{categoriaId}")]
         public async Task<ActionResult<IEnumerable<ProdutoViewModel>>> ObterProdutosPorCategoriaId(Guid categoriaId)
         {
-            var produtoCategoria = await _produtoRepository.ObterProdutosPorCategoriaId(categoriaId);
+            //Ao utilizar o dropdown de categorias, vai retornar o status de favorito dos produtos
+            var clienteId = UsuarioId != Guid.Empty ? UsuarioId : Guid.Empty;
+            var produtoCategoria = await _produtoRepository.ObterProdutosPorCategoriaIncluindoFavoritos(categoriaId, clienteId);
             var produtoModel = _mapper.Map<IEnumerable<ProdutoViewModel>>(produtoCategoria);
 
             return produtoModel.ToList();

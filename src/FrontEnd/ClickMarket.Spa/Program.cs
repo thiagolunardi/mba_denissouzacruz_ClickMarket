@@ -13,9 +13,10 @@ builder.Services.AddScoped<CookieService>();
 builder.Services.AddScoped<AccessTokenService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<ProdutoService>();
+builder.Services.AddScoped<CategoriaService>();
 builder.Services.AddHttpClient("ClickMarketAPI", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7251/api/");
+    client.BaseAddress = new Uri("http://localhost:5080/api/");
 });
 
 builder.Services.AddAuthorization();

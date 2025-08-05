@@ -12,5 +12,7 @@ namespace ClickMarket.Business.Interfaces
         Task<List<Produto>> ObterTodosIncluindoFavoritos(Guid? clienteId = null);
         Task<List<Produto>> ObterTodosApenasFavoritos(Guid clienteId);
         Task<Produto> ObterProdutoFavorito(Guid produtoId, Guid clienteId);
+        Task<IEnumerable<Produto>> ObterProdutosPorCategoriaIncluindoFavoritos(Guid categoriaId, Guid clienteId);
+
     }
 }

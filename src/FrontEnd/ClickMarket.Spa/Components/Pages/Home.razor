@@ -3,10 +3,23 @@
 @inject IJSRuntime JS
 
 @inject ProdutoService ProdutoService
+@inject CategoriaService CategoriaService
 
 <PageTitle>Home</PageTitle>
 
 <h1>Produtos em destaque</h1>
+
+    <!-- Seleção de Categorias -->
+    <select class="form-select-sm mb-4" @onchange="async e => await SelecionarCategoria(e)">
+        <option value="">Todas as categorias</option>
+        @if (categorias != null)
+        {
+            @foreach (var cat in categorias)
+            {
+                <option value="@cat.Id.ToString()">@cat.Nome</option>
+            }
+        }
+    </select>
 
 @if (produtos == null)
 {
@@ -21,7 +34,7 @@ else
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach (var p in produtos)
         {
-            <ProdutoComponent produto="p" 
+            <ProdutoComponent @key="p.Id" produto="p"
                 SalvarNaListaCallBack="async (value) => { await SalvarNaLista(value); }"
                 RemoverDaListaCallBack="async (value) => { await RemoverDaLista(value); }">
             </ProdutoComponent>
@@ -34,12 +47,17 @@ else
 
     private Guid id;
     private List<ProdutoViewModel> produtos;
+    private List<CategoriaViewModel> categorias;
+    private Guid? categoriaSelecionadaId;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            produtos = await ProdutoService.ObterProdutos();
+            categorias = await CategoriaService.Listar();
+            
+            produtos = await ProdutoService.ObterProdutos();            
+            
         }
         catch (Exception ex)
         {
@@ -50,11 +68,36 @@ else
 
     private async Task SalvarNaLista(Guid produtoId)
     {
-        produtos = await ProdutoService.ObterProdutos();
+        produtos = categoriaSelecionadaId.HasValue
+        ? await ProdutoService.ObterProdutosPorCategoria(categoriaSelecionadaId.Value)
+        : await ProdutoService.ObterProdutos();
     }
 
     private async Task RemoverDaLista(Guid produtoId)
     {        
-        produtos = await ProdutoService.ObterProdutos();
+        produtos = categoriaSelecionadaId.HasValue
+        ? await ProdutoService.ObterProdutosPorCategoria(categoriaSelecionadaId.Value)
+        : await ProdutoService.ObterProdutos();
     }
+
+    private async Task SelecionarCategoria(ChangeEventArgs e)
+    {
+       
+        if (Guid.TryParse(e.Value?.ToString(), out var categoriaId))
+        {
+            categoriaSelecionadaId = categoriaId;
+            produtos = await ProdutoService.ObterProdutosPorCategoria(categoriaId);
+            
+        }
+        else
+        {
+            categoriaSelecionadaId = null;
+            produtos = await ProdutoService.ObterProdutos();
+        }
+
+        StateHasChanged();
+        
+    }   
+
+    
 }
