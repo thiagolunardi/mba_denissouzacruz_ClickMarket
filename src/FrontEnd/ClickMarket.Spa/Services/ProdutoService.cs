@@ -117,4 +117,21 @@ public class ProdutoService(AccessTokenService accessTokenService, IHttpClientFa
             };
         }
     }
+
+    public async Task<List<ProdutoViewModel>> ObterProdutosPorCategoria(Guid categoriaId)
+    {
+        try
+        {
+            var token = await accessTokenService.ObterToken();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            var url = $"produtos/categoria/{categoriaId}";
+            var produtos = await _httpClient.GetFromJsonAsync<List<ProdutoViewModel>>(url);
+            return produtos ?? [];
+        }
+        catch
+        {
+            return [];
+        }
+    }
 }
