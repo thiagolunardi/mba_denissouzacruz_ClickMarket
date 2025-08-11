@@ -365,3 +365,5 @@ FodyWeavers.xsd
 *.Db
 /src/FrontEnd/ClickMarket.Api/BancoAutomatico.Db-shm
 *.Db-wal
+/src/FrontEnd/ClickMarket.Spa/wwwroot/imagens
+/src/BackEnd/ClickMaket.Data/BancoAutomatico.Db-shm
