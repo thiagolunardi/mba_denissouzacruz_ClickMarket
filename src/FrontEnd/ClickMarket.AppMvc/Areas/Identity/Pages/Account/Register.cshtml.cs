@@ -120,6 +120,11 @@ namespace ClickMarket.AppMvc.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    // Garante que o e-mail está confirmado e o lockout está desabilitado
+                    user.EmailConfirmed = true;
+                    user.LockoutEnabled = false;
+                    await _userManager.UpdateAsync(user);
+
                     var vendedor = new Vendedor()
                     {
                         Id = Guid.Parse(user.Id),
@@ -127,6 +132,8 @@ namespace ClickMarket.AppMvc.Areas.Identity.Pages.Account
                         Email = user.Email
                     };
                     await _vendedor.Adicionar(vendedor);
+
+                    await _userManager.AddToRoleAsync(user, "Vendedor");
 
                     _logger.LogInformation("Usuário criado com sucesso.");
 

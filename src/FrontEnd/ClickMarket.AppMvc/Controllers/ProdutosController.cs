@@ -5,7 +5,6 @@ using ClickMarket.Business.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
 using System.Security.Claims;
 
 namespace ClickMarket.AppMvc.Controllers
