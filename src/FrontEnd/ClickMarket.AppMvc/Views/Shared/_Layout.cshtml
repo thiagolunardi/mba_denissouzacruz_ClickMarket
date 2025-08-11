@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
@@ -18,9 +22,26 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <partial name="_NavBarPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Vendedor") || User.IsInRole("Admin")))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Produtos" asp-action="Index">Produtos</a>
+                            </li>
+                        }
+
+                        @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Categorias" asp-action="Index">Categorias</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Vendedores" asp-action="Index">Vendedores</a>
+                            </li>
+                        }
+                    </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -35,7 +56,9 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - Click Market Ecommerce
+            &copy; @DateTime.Now.ToString("yyyy") - Click Market Ecommerce - Todos os direitos reservados. Desenvolvido por Grupo 6
+            para o
+            <a class="nav-link d-inline-block p-0" href="https://desenvolvedor.io/mba" target="_blank" rel="noopener">MBA DevXpert Full Stack .NET da Desenvolvedor.io</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
