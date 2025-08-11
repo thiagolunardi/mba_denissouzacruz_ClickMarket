@@ -6,8 +6,8 @@ builder
     .AddDatabaseSelector()
     .AddMvcConfig()
     .RegisterServices()
-    .AddIdentityConfig();
-
+    .AddIdentityConfig()
+    .AddLocalizationConfig();
 
 var app = builder.Build();
 

@@ -22,7 +22,6 @@ namespace ClickMarket.AppMvc.Controllers
             _mapper = mapper;
         }
 
-        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var categoria = await _categoriaRepository.ObterTodos();
@@ -32,7 +31,6 @@ namespace ClickMarket.AppMvc.Controllers
 
         [HttpGet]
         [Route("detalhes/{id:guid}")]
-        [AllowAnonymous]
         public async Task<IActionResult> Details(Guid id)
         {
             var categoria = await _categoriaRepository.ObterPorId(id);
