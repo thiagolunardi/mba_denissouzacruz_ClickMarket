@@ -49,6 +49,7 @@ namespace ClickMarket.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ProdutoViewModel>>> ObterTodos()
         {
+            var claims = User.Claims;
             var produtoCategoria = await _produtoRepository.ObterTodosIncluindoFavoritos(UsuarioId != Guid.Empty ? UsuarioId : null);
             var produtoModel = _mapper.Map<IEnumerable<ProdutoViewModel>>(produtoCategoria);
 
