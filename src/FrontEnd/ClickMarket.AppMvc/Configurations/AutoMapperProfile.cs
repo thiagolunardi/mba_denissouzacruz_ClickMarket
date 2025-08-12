@@ -21,7 +21,7 @@ public class AutoMapperProfile : Profile
     {
         //caminho da imagem do spa, ambas aplicações (front-end e back-end) estão rodando na mesma máquina
         //var caminhoBase = "~/images/upload/" //usar para testes locais sem SPA
-        var caminhoBase = "https://localhost:7019/images/upload/";
+        var caminhoBase = "images/upload/";
 
         return string.IsNullOrEmpty(produto.Imagem) ? "no-image.png" : caminhoBase + produto.Imagem;
     }

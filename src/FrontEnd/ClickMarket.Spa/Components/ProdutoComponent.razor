@@ -1,11 +1,17 @@
 ﻿@rendermode InteractiveServer
 @inject IJSRuntime JS
-
 @inject ProdutoService ProdutoService
+@using Microsoft.Extensions.Options
+@using ClickMarket.Spa.Services
+@inject IOptions<ClickMarketMvcOptions> MvcOptions
 
 <div class="col">
     <div class="card h-100">
-        <img class="card-img-top" src="@ObterImagemUrl(produto.Imagem)" alt="@produto.Nome" style="height:200px; object-fit:contain;" />
+        @* <img class="card-img-top" src="@ObterImagemUrl(produto.Imagem)" alt="@produto.Nome" style="height:200px; object-fit:contain;" /> *@
+        @{
+            var imageUrl = $"{MvcOptions.Value.BaseUrl}/images/upload/{produto.Imagem}";
+        }
+        <img class="card-img-top" src="@imageUrl" alt="@produto.Nome" style="height:200px; object-fit:contain;" />
         <div class="card-body">
             <h5 class="card-title">@produto.Nome</h5>
             <p class="card-text text-truncate">@produto.Descricao</p>

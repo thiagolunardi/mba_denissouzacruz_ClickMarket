@@ -19,6 +19,9 @@ builder.Services.AddHttpClient("ClickMarketAPI", client =>
     client.BaseAddress = new Uri("http://localhost:5080/api/");
 });
 
+builder.Services.Configure<ClickMarketMvcOptions>(
+    builder.Configuration.GetSection(ClickMarketMvcOptions.SectionName));
+
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication()
     .AddScheme<CustomOptions, JWTAuthenticationHandler>(

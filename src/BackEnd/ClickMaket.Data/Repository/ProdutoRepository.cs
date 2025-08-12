@@ -10,18 +10,18 @@ namespace ClickMarket.Data.Repository
         public async Task<List<Produto>> ObterTodosProdutos()
         {
             return await _dbSet.AsNoTracking()
-                    .Include(x => x.Categoria)
-                    .Include(x => x.Vendedor)
+                    .Include(p => p.Categoria)
+                    .Include(p => p.Vendedor)
                     .ToListAsync();
         }
 
         public async Task<IEnumerable<Produto>> ObterProdutoCategoria(Guid? clienteId = null)
         {
             return await _dbSet.AsNoTracking()
-                    .Include(x => x.Categoria)
-                    .Include(x => x.Vendedor)
-                    .Include(x => x.Favorito)
-                    .Where(x => !clienteId.HasValue || x.Favorito.ClienteId == clienteId || x.Favorito == null)
+                    .Include(p => p.Categoria)
+                    .Include(p => p.Vendedor)
+                    .Include(p => p.Favorito)
+                    .Where(p => !clienteId.HasValue || p.Favorito.ClienteId == clienteId || p.Favorito == null && p.Ativo && p.Vendedor.Ativo)
                     .ToListAsync();
         }
 
@@ -29,27 +29,29 @@ namespace ClickMarket.Data.Repository
         {
             return await _dbSet
                         .AsNoTracking()
-                        .Include(x => x.Categoria)
-                        .Include(v => v.Vendedor)
-                        .FirstOrDefaultAsync(x => x.Id == id);
+                        .Include(p => p.Categoria)
+                        .Include(p => p.Vendedor)
+                        .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<List<Produto>> ObterProdutoPorVendedor(Guid vendedorId)
         {
             return await _dbSet
-                        .AsNoTracking()
-                        .Include(x => x.Categoria)
-                        .Include(v => v.Vendedor)
-                        .Where(x => x.VendedorId == vendedorId).ToListAsync();
+                .AsNoTracking()
+                .Include(p => p.Categoria)
+                .Include(p => p.Vendedor)
+                .Where(p => p.VendedorId == vendedorId)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Produto>> ObterProdutosPorCategoriaId(Guid categoriaId)
         {
             return await _dbSet
-                        .AsNoTracking()
-                        .Include(x => x.Categoria)
-                        .Include(v => v.Vendedor)
-                        .Where(x => x.CategoriaId == categoriaId).ToListAsync();
+        .AsNoTracking()
+        .Include(p => p.Categoria)
+        .Include(p => p.Vendedor)
+        .Where(p => p.CategoriaId == categoriaId && p.Ativo && p.Vendedor.Ativo)
+        .ToListAsync();
         }
 
         public async Task<List<Produto>> ObterTodosIncluindoFavoritos(Guid? clienteId = null)
@@ -59,15 +61,15 @@ namespace ClickMarket.Data.Repository
             {
                 var produtosFavoritados = await _dbSet
                                         .AsNoTracking()
-                                        .Include(x => x.Favorito)
-                                        .Where(a => a.Favorito.ClienteId == clienteId)
+                                        .Include(p => p.Favorito)
+                                        .Where(p => p.Favorito.ClienteId == clienteId && p.Ativo && p.Vendedor.Ativo)
                                         .ToListAsync();
 
                 var idsFavoritados = produtosFavoritados.Select(x => x.Id).ToList();
 
                 var produtosTotais = await _dbSet
                                         .AsNoTracking()
-                                        .Where(a => !idsFavoritados.Contains(a.Id))
+                                        .Where(p => !idsFavoritados.Contains(p.Id) && p.Ativo && p.Vendedor.Ativo)
                                         .ToListAsync();
 
                 produtos.AddRange(produtosFavoritados);
@@ -78,6 +80,7 @@ namespace ClickMarket.Data.Repository
 
             produtos.AddRange(await _dbSet
                                         .AsNoTracking()
+                                        .Where(p => p.Ativo && p.Vendedor.Ativo)
                                         .ToListAsync());
 
             return produtos;
@@ -90,8 +93,8 @@ namespace ClickMarket.Data.Repository
 
             return await _dbSet
                             .AsNoTracking()
-                            .Include(x => x.Favorito)
-                            .Where(a => a.Favorito.ClienteId == clienteId)
+                            .Include(p => p.Favorito)
+                            .Where(p => p.Favorito.ClienteId == clienteId && p.Ativo && p.Vendedor.Ativo)
                             .ToListAsync();
         }
 
@@ -105,7 +108,7 @@ namespace ClickMarket.Data.Repository
         public async Task<IEnumerable<Produto>> ObterProdutosPorCategoriaIncluindoFavoritos(Guid categoriaId, Guid clienteId)
         {
             var produtos = await _clickDb.Produtos
-                .Where(p => p.CategoriaId == categoriaId)
+                .Where(p => p.CategoriaId == categoriaId && p.Ativo && p.Vendedor.Ativo)
                 .ToListAsync();
 
             var favoritos = await _clickDb.Favoritos
