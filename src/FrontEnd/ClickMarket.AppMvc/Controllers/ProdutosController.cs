@@ -211,12 +211,12 @@ namespace ClickMarket.AppMvc.Controllers
             {
                 try
                 {
-                    string caminhoBase = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-                    var caminhoUpload = Path.Combine(caminhoBase, "ClickMarket.Spa", "wwwroot", "imagens");
+                    //string caminhoBase = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+                    //var caminhoUpload = Path.Combine(caminhoBase, "ClickMarket.Spa", "wwwroot", "imagens");
 
                     //Usar quando estiver rodando a aplicação sem o SPA
-                    //string caminhoBase = Directory.GetCurrentDirectory();
-                    //var caminhoUpload = Path.Combine(caminhoBase, "wwwroot", "images", "upload");
+                    string caminhoBase = Directory.GetCurrentDirectory();
+                    var caminhoUpload = Path.Combine(caminhoBase, "wwwroot", "images", "upload");
 
                     if (!Directory.Exists(caminhoUpload))
                         Directory.CreateDirectory(caminhoUpload);
