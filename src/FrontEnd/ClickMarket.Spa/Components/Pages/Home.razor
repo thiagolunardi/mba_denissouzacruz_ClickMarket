@@ -9,17 +9,22 @@
 
 <h1>Produtos em destaque</h1>
 
-    <!-- Seleção de Categorias -->
-    <select class="form-select-sm mb-4" @onchange="async e => await SelecionarCategoria(e)">
-        <option value="">Todas as categorias</option>
-        @if (categorias != null)
-        {
-            @foreach (var cat in categorias)
+<div class="row">
+    <div class="col-4">
+        <label class="form-control-plaintext">Filtrar por:</label>
+        <!-- Seleção de Categorias -->
+        <select class="form-select form-select-mb mb-4" @onchange="async e => await SelecionarCategoria(e)">
+            <option value="">Todas as categorias</option>
+            @if (categorias != null)
             {
-                <option value="@cat.Id.ToString()">@cat.Nome</option>
+                @foreach (var cat in categorias)
+                {
+                    <option value="@cat.Id.ToString()">@cat.Nome</option>
+                }
             }
-        }
-    </select>
+        </select>
+    </div>
+</div>
 
 @if (produtos == null)
 {
@@ -35,8 +40,8 @@ else
         @foreach (var p in produtos)
         {
             <ProdutoComponent @key="p.Id" produto="p"
-                SalvarNaListaCallBack="async (value) => { await SalvarNaLista(value); }"
-                RemoverDaListaCallBack="async (value) => { await RemoverDaLista(value); }">
+                              SalvarNaListaCallBack="async (value) => { await SalvarNaLista(value); }"
+                              RemoverDaListaCallBack="async (value) => { await RemoverDaLista(value); }">
             </ProdutoComponent>
         }
     </div>
@@ -55,9 +60,9 @@ else
         try
         {
             categorias = await CategoriaService.Listar();
-            
-            produtos = await ProdutoService.ObterProdutos();            
-            
+
+            produtos = await ProdutoService.ObterProdutos();
+
         }
         catch (Exception ex)
         {
@@ -74,7 +79,7 @@ else
     }
 
     private async Task RemoverDaLista(Guid produtoId)
-    {        
+    {
         produtos = categoriaSelecionadaId.HasValue
         ? await ProdutoService.ObterProdutosPorCategoria(categoriaSelecionadaId.Value)
         : await ProdutoService.ObterProdutos();
@@ -82,12 +87,12 @@ else
 
     private async Task SelecionarCategoria(ChangeEventArgs e)
     {
-       
+
         if (Guid.TryParse(e.Value?.ToString(), out var categoriaId))
         {
             categoriaSelecionadaId = categoriaId;
             produtos = await ProdutoService.ObterProdutosPorCategoria(categoriaId);
-            
+
         }
         else
         {
@@ -96,8 +101,8 @@ else
         }
 
         StateHasChanged();
-        
-    }   
 
-    
+    }
+
+
 }

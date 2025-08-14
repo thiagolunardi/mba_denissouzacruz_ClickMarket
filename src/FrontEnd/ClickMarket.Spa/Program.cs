@@ -16,7 +16,7 @@ builder.Services.AddScoped<ProdutoService>();
 builder.Services.AddScoped<CategoriaService>();
 builder.Services.AddHttpClient("ClickMarketAPI", client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5080/api/");
+    client.BaseAddress = new Uri("https://localhost:7251/api/");
 });
 
 builder.Services.Configure<ClickMarketMvcOptions>(
