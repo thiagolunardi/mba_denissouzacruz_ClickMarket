@@ -7,15 +7,13 @@
 
 <div class="col">
     <div class="card h-100">
-        @* <img class="card-img-top" src="@ObterImagemUrl(produto.Imagem)" alt="@produto.Nome" style="height:200px; object-fit:contain;" /> *@
-        @{
-            var imageUrl = $"{MvcOptions.Value.BaseUrl}/images/upload/{produto.Imagem}";
-        }
-        <img class="card-img-top" src="@imageUrl" alt="@produto.Nome" style="height:200px; object-fit:contain;" />
-        <div class="card-body">
-            <h5 class="card-title">@produto.Nome</h5>
-            <p class="card-text text-truncate">@produto.Descricao</p>
-        </div>
+        <NavLink class="nav-link text-black" href="@produtoDetalhesUrl">
+            <img class="card-img-top" src="@imagemUrl" alt="@produto.Nome" style="height:200px; object-fit:contain;" />
+            <div class="card-body">
+                <h5 class="card-title">@produto.Nome</h5>
+                <p class="card-text text-truncate">@produto.Descricao</p>
+            </div>
+        </NavLink>
         <div class="card-footer">
             <div class="card-footer">
                 <div class="row">
@@ -45,6 +43,8 @@
 </div>
 
 @code {
+    public string imagemUrl => $"{MvcOptions.Value.BaseUrl}/images/upload/{produto.Imagem}";
+    public string produtoDetalhesUrl => $"produto/{produto.Id}";
 
     [Parameter]
     public ProdutoViewModel produto { get; set; }
