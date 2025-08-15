@@ -20,22 +20,25 @@
                     <div class="col-md-4">
                         <span class="fw-bold">R$ @produto.Valor.ToString("N2")</span>
                     </div>
-                    <div class="col-md-6 offset-md-2">
-                        <AuthorizeView>
-                            <Authorized>
-                                @if (!produto.NaListaDesejos)
-                                {
-                                    <input type="checkbox" class="btn-check float-end" id="@produto.Nome" autocomplete="off" @onchange="TriggerEventSalvar">
-                                    <label class="btn btn-outline-primary float-end" for="@produto.Nome">Adicionar à lista</label>
-                                }
-                                else
-                                {
-                                    <input type="checkbox" class="btn-check float-end" id="@produto.Nome" autocomplete="off" @onchange="TriggerEventRemover">
-                                    <label class="btn btn-outline-secondary float-end" for="@produto.Nome">Remover da lista</label>
-                                }
-                            </Authorized>
-                        </AuthorizeView>
-                    </div>
+                    @if (produtoVitrine)
+                    {
+                        <div class="col-md-6 offset-md-2">
+                            <AuthorizeView>
+                                <Authorized>
+                                    @if (!produto.NaListaDesejos)
+                                    {
+                                        <input type="checkbox" class="btn-check float-end" id="@produto.Nome" autocomplete="off" @onchange="TriggerEventSalvar">
+                                        <label class="btn btn-outline-primary float-end" for="@produto.Nome">Adicionar à lista</label>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" class="btn-check float-end" id="@produto.Nome" autocomplete="off" @onchange="TriggerEventRemover">
+                                        <label class="btn btn-outline-secondary float-end" for="@produto.Nome">Remover da lista</label>
+                                    }
+                                </Authorized>
+                            </AuthorizeView>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -48,6 +51,9 @@
 
     [Parameter]
     public ProdutoViewModel produto { get; set; }
+
+    [Parameter]
+    public bool produtoVitrine { get; set; } = false;
 
     [Parameter]
     public EventCallback<Guid> SalvarNaListaCallBack { get; set; }

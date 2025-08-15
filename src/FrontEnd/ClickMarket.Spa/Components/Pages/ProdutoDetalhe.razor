@@ -38,9 +38,7 @@ else
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach (var p in outrosProdutos)
             {
-                <ProdutoComponent @key="p.Id" produto="p"
-                                  SalvarNaListaCallBack="async (value) => { await SalvarNaLista(value); }"
-                                  RemoverDaListaCallBack="async (value) => { await RemoverDaLista(value); }">
+                <ProdutoComponent @key="p.Id" produto="p" produtoVitrine="false">
                 </ProdutoComponent>
             }
         </div>
@@ -64,17 +62,5 @@ else
             var lista = await ProdutoService.ObterProdutosPorVendedor(produto.Vendedor.Id);
             outrosProdutos = lista.Where(p => p.Id != produto.Id).ToList();
         }
-    }
-
-    private async Task SalvarNaLista(Guid produtoId)
-    {
-        if (produto == null) return;
-        outrosProdutos = (await ProdutoService.ObterProdutosPorVendedor(produto.Vendedor.Id)).Where(p => p.Id != produto.Id).ToList();
-        StateHasChanged();
-    }
-
-    private async Task RemoverDaLista(Guid produtoId)
-    {
-        await SalvarNaLista(produtoId);
     }
 }
