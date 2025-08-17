@@ -49,7 +49,7 @@ A estrutura do projeto é organizada da seguinte forma:
 - src/
   - ClickMarket.AppMvc/ - Projeto MVC
   - ClickMarket.Api/ - API RESTful
-  - ClickMarket.Blazor/ - Projeto SPA
+  - ClickMarket.Spa/ - Projeto SPA
   - ClickMarket.Business/ - Serviços para acesso à camada de dados
   - ClickMarket.Data/ - Modelos de Dados e Configuração do EF Core
 - README.md - Arquivo de Documentação do Projeto
@@ -87,18 +87,18 @@ A estrutura do projeto é organizada da seguinte forma:
 3. **Executar a Aplicação MVC:**
    - `cd src/ClickMarket.AppMvc/`
    - `dotnet run`
-   - Acesse a aplicação em: https://localhost:7050/
+   - Acesse a aplicação em: https://localhost:7042/
    - Para visualizar produtos carregados inicialmente, utilize o usuário: teste@teste.com e senha: Teste@123
 
 4. **Executar a API:**
    - `cd src/ClickMarket.Api/`
    - `dotnet run`
-   - Acesse a documentação da API em: https://localhost:7260/swagger
+   - Acesse a documentação da API em: https://localhost:7251/swagger
 
 5. **Executar o SPA:**
-   - `cd src/ClickMarket.Blazor/`
+   - `cd src/ClickMarket.Spa/`
    - `dotnet run`
-   - Acesse a documentação da API em: https://localhost:7050/
+   - Acesse a documentação da API em: https://localhost:7019/
 
 ## **7. Instruções de Configuração**
 
@@ -109,7 +109,7 @@ A estrutura do projeto é organizada da seguinte forma:
 
 A documentação da API está disponível através do Swagger. Após iniciar a API, acesse a documentação em:
 
-https://localhost:7260/swagger
+https://localhost:7251/swagger
 
 ## **9. Avaliação**
 
