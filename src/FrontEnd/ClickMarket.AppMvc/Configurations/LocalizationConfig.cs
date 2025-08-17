@@ -40,4 +40,21 @@ public static class LocalizationConfig
             SupportedUICultures = culturasSuportadas
         });
     }
+
+    public static WebApplication UseGlobalizationConfig(this WebApplication app)
+    {
+        ArgumentNullException.ThrowIfNull(app);
+
+        var defaultCulture = new CultureInfo("pt-BR");
+
+        // Configura as opções de localização.
+        var useLocalizationOptions = (new RequestLocalizationOptions
+        {
+            DefaultRequestCulture = new RequestCulture(defaultCulture),
+            SupportedCultures = new List<CultureInfo> { defaultCulture },
+            SupportedUICultures = new List<CultureInfo> { defaultCulture }
+        });
+        app.UseRequestLocalization(useLocalizationOptions);
+        return app;
+    }
 }

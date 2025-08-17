@@ -1,4 +1,5 @@
-﻿using ClickMarket.Business.Models;
+﻿using ClickMarket.AppMvc.Extensions;
+using ClickMarket.Business.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,6 +30,7 @@ namespace ClickMarket.AppMvc.ViewModels
         public Guid CategoriaId { get; set; }
 
         [Required(ErrorMessage = "Preencha o campo {0}.")]
+        [Moeda]
         [Range(1, double.MaxValue, ErrorMessage = "O valor precisa ser maior que 0")]
         [DisplayName("Preço")]
         public decimal Valor { get; set; }
