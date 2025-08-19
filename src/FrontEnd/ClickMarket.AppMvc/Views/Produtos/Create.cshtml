@@ -65,11 +65,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
-    <script>
-
-        $('#form-produto').submit(function () {
-            const valor = $('#Valor').val();
-            $('#Valor').val(valor.replace(".", ""));
-        });
-    </script>
 }

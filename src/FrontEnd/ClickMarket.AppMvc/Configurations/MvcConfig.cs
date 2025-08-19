@@ -6,7 +6,11 @@
         {
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(options =>
+            {
+                MvcOptionsConfig.ConfigurarMensagensModelBinding(options.ModelBindingMessageProvider);
+            
+            });
             builder.Services.AddRazorPages();
 
             return builder;
