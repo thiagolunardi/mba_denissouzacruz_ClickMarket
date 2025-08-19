@@ -1,7 +1,7 @@
-﻿using ClickMarket.AppMvc.Adapters;
-using Microsoft.AspNetCore.Localization;
+﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.Localization;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
 namespace ClickMarket.AppMvc.Configurations;
@@ -56,5 +56,23 @@ public static class LocalizationConfig
         });
         app.UseRequestLocalization(useLocalizationOptions);
         return app;
+    }
+}
+
+public class CustomValidationAttributeAdapterProvider : IValidationAttributeAdapterProvider
+{
+    private readonly ValidationAttributeAdapterProvider _baseProvider = new();
+
+    public IAttributeAdapter? GetAttributeAdapter(ValidationAttribute attribute, IStringLocalizer? stringLocalizer)
+    {
+        if (attribute is RequiredAttribute requiredAttribute)
+        {
+            requiredAttribute.ErrorMessage = "O campo {0} é obrigatório.";
+        }
+        else if (attribute is StringLengthAttribute stringLengthAttribute)
+        {
+            stringLengthAttribute.ErrorMessage = "O campo {0} deve ter no máximo {1} caracteres.";
+        }
+        return _baseProvider.GetAttributeAdapter(attribute, stringLocalizer);
     }
 }

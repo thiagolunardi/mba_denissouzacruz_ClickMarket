@@ -17,6 +17,7 @@ namespace ClickMarket.Data.Context
             modelBuilder.ApplyConfiguration(new ProdutoMapping());
             modelBuilder.ApplyConfiguration(new CategoriaMapping());
             modelBuilder.ApplyConfiguration(new VendedorMapping());
+            modelBuilder.ApplyConfiguration(new ClienteMapping());
 
             base.OnModelCreating(modelBuilder);
         }
