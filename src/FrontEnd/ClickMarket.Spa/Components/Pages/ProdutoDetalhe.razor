@@ -2,6 +2,9 @@
 @rendermode InteractiveServer
 @using ClickMarket.Spa.Models
 @using ClickMarket.Spa.Services
+@using Microsoft.AspNetCore.Mvc
+@using Microsoft.Extensions.Options
+@inject IOptions<ClickMarketMvcOptions> MvcOptions
 @inject ProdutoService ProdutoService
 
 <PageTitle>Detalhes do Produto</PageTitle>
@@ -15,7 +18,7 @@ else
 {
     <div class="row mb-5">
         <div class="col-md-4">
-            <img src="@imagemUrl" class="img-fluid" alt="@produto.Nome" />
+            <img src="@imagemUrl" class="img-fluid" alt="@produto.Nome" style="height:200px; object-fit:contain;" />
         </div>
         <div class="col-md-8">
             <h2>@produto.Nome</h2>
@@ -48,7 +51,7 @@ else
 @code {
     private ProdutoViewModel produto;
     private List<ProdutoViewModel> outrosProdutos;
-    private string imagemUrl;
+    public string imagemUrl { get; set; }
 
     [Parameter]
     public Guid id { get; set; }
@@ -58,7 +61,7 @@ else
         produto = await ProdutoService.ObterProduto(id);
         if (produto != null)
         {
-            imagemUrl = ProdutoService.ObterImagem(produto.Imagem);
+            imagemUrl = $"{MvcOptions.Value.BaseUrl}/images/upload/{produto.Imagem}";
             var lista = await ProdutoService.ObterProdutosPorVendedor(produto.Vendedor.Id);
             outrosProdutos = lista.Where(p => p.Id != produto.Id).ToList();
         }
