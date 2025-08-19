@@ -9,7 +9,7 @@
             builder.Services.AddControllersWithViews(options =>
             {
                 MvcOptionsConfig.ConfigurarMensagensModelBinding(options.ModelBindingMessageProvider);
-            
+
             });
             builder.Services.AddRazorPages();
 

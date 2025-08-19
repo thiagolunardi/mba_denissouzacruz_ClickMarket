@@ -26,7 +26,7 @@ namespace ClickMarket.Business.Services
         {
             var produtos = await _produtoRepository.ObterProdutosPorCategoriaId(id);
 
-            if(produtos.Any())
+            if (produtos.Any())
             {
                 Notificar("Não é possível remover essa categoria, pois te produtos adicionados.");
                 return;
