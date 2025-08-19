@@ -10,10 +10,4 @@
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Content Update="wwwroot\imagens\no-image.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
-
 </Project>

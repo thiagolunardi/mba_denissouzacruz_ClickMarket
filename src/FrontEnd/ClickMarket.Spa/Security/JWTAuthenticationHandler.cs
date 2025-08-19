@@ -6,12 +6,8 @@ using System.Text.Encodings.Web;
 
 namespace ClickMarket.Spa.Security;
 
-public class JWTAuthenticationHandler : AuthenticationHandler<CustomOptions>
+public class JWTAuthenticationHandler(IOptionsMonitor<CustomOptions> options, ILoggerFactory logger, UrlEncoder encoder) : AuthenticationHandler<CustomOptions>(options, logger, encoder)
 {
-    public JWTAuthenticationHandler(IOptionsMonitor<CustomOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
-    {
-    }
-
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         try
@@ -26,9 +22,9 @@ public class JWTAuthenticationHandler : AuthenticationHandler<CustomOptions>
             var principal = new ClaimsPrincipal(identiy);
             var ticket = new AuthenticationTicket(principal, Scheme.Name);
 
-            return AuthenticateResult.Success(ticket);
+            return await Task.FromResult(AuthenticateResult.Success(ticket));
         }
-        catch (Exception ex)
+        catch
         {
             return AuthenticateResult.NoResult();
         }
