@@ -104,7 +104,7 @@ namespace ClickMarket.Data.Repository
                 .AsNoTracking()
                 .Include(x => x.Favorito)
                 .FirstOrDefaultAsync(a => a.Favorito.ClienteId == clienteId && a.Id == produtoId);
-        }        
+        }
         public async Task<IEnumerable<Produto>> ObterProdutosPorCategoriaIncluindoFavoritos(Guid categoriaId, Guid clienteId)
         {
             var produtos = await _clickDb.Produtos

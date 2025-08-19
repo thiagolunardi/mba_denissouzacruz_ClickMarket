@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using ClickMarket.Api.ViewModels;
-using ClickMarket.Business.Dtos;
 using ClickMarket.Business.Models;
-using ClickMarket.Business.Requests;
 
 namespace ClickMarket.Api.Configurations;
 
@@ -17,9 +15,8 @@ public class AutoMapperProfile : Profile
         CreateMap<VendedorViewModel, Vendedor>().ReverseMap();
 
 
-        CreateMap<ClienteRequest, Cliente>();
-        CreateMap<Cliente, ClienteDto>();
-        CreateMap<Favorito, FavoritoDto>();
-        CreateMap<Produto, ProdutoDto>();
+        CreateMap<ClienteViewModel, Cliente>();
+        CreateMap<Cliente, ClienteViewModel>();
+        CreateMap<Favorito, FavoritoViewModel>();
     }
 }

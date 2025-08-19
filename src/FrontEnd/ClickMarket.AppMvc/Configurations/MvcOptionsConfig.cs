@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
-using Microsoft.DotNet.Scaffolding.Shared;
 
 namespace ClickMarket.AppMvc.Configurations
 {

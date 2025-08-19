@@ -18,8 +18,6 @@ namespace ClickMarket.Data.Context
             modelBuilder.ApplyConfiguration(new CategoriaMapping());
             modelBuilder.ApplyConfiguration(new VendedorMapping());
 
-            //modelBuilder.Entity<Produto>().HasQueryFilter(p => p.Ativo);
-
             base.OnModelCreating(modelBuilder);
         }
     }

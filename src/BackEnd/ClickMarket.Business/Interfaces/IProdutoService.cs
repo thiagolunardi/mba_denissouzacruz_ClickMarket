@@ -1,5 +1,4 @@
-﻿using ClickMarket.Business.Dtos;
-using ClickMarket.Business.Models;
+﻿using ClickMarket.Business.Models;
 
 namespace ClickMarket.Business.Interfaces;
 

@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using ClickMarket.Business.Dtos;
-using ClickMarket.Business.Interfaces;
+﻿using ClickMarket.Business.Interfaces;
 using ClickMarket.Business.Models;
 
 namespace ClickMarket.Business.Services;
@@ -8,8 +6,7 @@ namespace ClickMarket.Business.Services;
 public class ProdutoService(
     INotificador notificador,
     IProdutoRepository produtoRepository,
-    IFavoritoRepository favoritoRepository,
-    IMapper mapper) : BaseService(notificador), IProdutoService
+    IFavoritoRepository favoritoRepository) : BaseService(notificador), IProdutoService
 {
     public async Task Adicionar(Produto produto)
     {

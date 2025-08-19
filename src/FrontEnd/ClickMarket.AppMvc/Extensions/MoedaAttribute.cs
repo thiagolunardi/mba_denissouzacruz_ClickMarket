@@ -6,33 +6,33 @@ using System.Globalization;
 
 namespace ClickMarket.AppMvc.Extensions
 {
-    public class MoedaAttribute: ValidationAttribute
+    public class MoedaAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-			try
-			{
-				var moeda = Convert.ToDecimal(value, new CultureInfo("pt-BR"));
-			}
-			catch (Exception)
-			{
-				return new ValidationResult("Moeda em formato inválido!");
-			}
+            try
+            {
+                var moeda = Convert.ToDecimal(value, new CultureInfo("pt-BR"));
+            }
+            catch (Exception)
+            {
+                return new ValidationResult("Moeda em formato inválido!");
+            }
 
-			return ValidationResult.Success;
+            return ValidationResult.Success;
         }
     }
 
-	public class MoedaAttributeAdapter : AttributeAdapterBase<MoedaAttribute>
-	{
-        public MoedaAttributeAdapter(MoedaAttribute attribute, IStringLocalizer stringLocalizer): base(attribute, stringLocalizer)
+    public class MoedaAttributeAdapter : AttributeAdapterBase<MoedaAttribute>
+    {
+        public MoedaAttributeAdapter(MoedaAttribute attribute, IStringLocalizer stringLocalizer) : base(attribute, stringLocalizer)
         {
-                
+
         }
 
         public override void AddValidation(ClientModelValidationContext context)
         {
-            if (context ==null)
+            if (context == null)
                 throw new ArgumentNullException("context");
 
             MergeAttribute(context.Attributes, "data-val", "true");

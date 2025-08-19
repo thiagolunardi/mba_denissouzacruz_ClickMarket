@@ -1,7 +1,7 @@
 ﻿using ClickMarket.Api.Extensions;
 using ClickMarket.Api.ViewModels;
 using ClickMarket.Business.Interfaces;
-using ClickMarket.Business.Requests;
+using ClickMarket.Business.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -51,7 +51,7 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
 
             await _userManager.AddToRoleAsync(user, "Cliente");
 
-            var cliente = await _clienteService.Adicionar(new ClienteRequest
+            var cliente = await _clienteService.Adicionar(new Cliente
             {
                 Id = Guid.Parse(user.Id),
                 Nome = registerUserViewModel.Name,

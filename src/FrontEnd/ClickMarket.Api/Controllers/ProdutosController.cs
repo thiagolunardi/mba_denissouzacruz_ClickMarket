@@ -1,13 +1,9 @@
 using AutoMapper;
-using ClickMarket.Api.Extensions;
 using ClickMarket.Api.ViewModels;
-using ClickMarket.Business.Dtos;
 using ClickMarket.Business.Interfaces;
-using ClickMarket.Business.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace ClickMarket.Api.Controllers
 {
@@ -174,7 +170,7 @@ namespace ClickMarket.Api.Controllers
 
             await _produtoService.Inativar(id);
 
-            if(!OperacaoValida())
+            if (!OperacaoValida())
                 return CustomResponse();
 
             return NoContent();
@@ -223,7 +219,7 @@ namespace ClickMarket.Api.Controllers
         [Authorize(Roles = "Cliente")]
         [HttpGet]
         [Route("favoritos")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<FavoritoDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProdutoViewModel>))]
         [ProducesDefaultResponseType]
         public async Task<ActionResult<List<ProdutoViewModel>>> ObterFavoritos()
         {
@@ -234,7 +230,7 @@ namespace ClickMarket.Api.Controllers
 
         [Authorize(Roles = "Cliente")]
         [HttpPost("favoritos/{produtoId}")]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(FavoritoDto))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProdutoViewModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> AdicionarFavorito(Guid produtoId)
