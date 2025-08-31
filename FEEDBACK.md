@@ -1,5 +1,10 @@
 # Feedback - Avaliação Final
 
+## Video de Apresentação
+
+* O vídeo é claro e apresenta bem a solução.
+* Boa menção dos aprendizados e desafios enfrentados.
+
 ## Funcionalidade 30%
 
 Avalie se o projeto atende a todos os requisitos funcionais definidos.
@@ -16,33 +21,29 @@ Considere clareza, organização e uso de padrões de codificação.
 public async Task<Categoria?> GetByIdAsync(int id) => await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 ```
 * Evite usar `x` como nome de variável, use nomes mais descritivos.
-* Em `IRepository` existe um `SaveChanges()`. Nao é responsabilidade do repositório salvar mudanças. Isso pertence à unidade de trabalho (Unit of Work).
 * A abstração de repositório genérico não deve possuir métodos públicos para não oferecer meios de "esquivar" da especialização.
 * A abstração `Repository<T>` espera `ClickDbContext` no construtor, mas o ideal é esperar `DbContext`, para facilitar testes e manutenção.
-* Não foi adotado uma Unidade de Trabalho (Unit of Work) para gerenciar transações.
 * Em `Repository.Remover` existe um `T objeto` onde `T` é uma entidade. Recomenda-se user `T entidade` para maior clareza, ou mesmo renomear `T` para `TEntity`.
 
 ### Business
 * Em `EntityBase` o construtor deve ser `protected` para evitar instanciação direta.
 * Os serviços estão fazendo _Dispose()_ dos repositórios incorretamente. Isso não é responsabilidade dos serviços já que existe um *Dependency Injector* gerenciando o ciclo de vida.
-* Os serviços estão fazendo `GC.SupressFinalize(this)` incorretamente. Isso não é responsabilidade dos serviços já que isso _perturba_ o cicle do _Garbage Collector_.
-* Em `CategoriaService` 'e usado contranstrutor primário, mas também contém campos privados desnecessários.
+* Os serviços estão fazendo `GC.SupressFinalize(this)` incorretamente. Isso não é responsabilidade dos serviços já que isso _perturba_ o ciclo do _Garbage Collector_.
+* Em `CategoriaService` 'e usado construtor primário, mas também contém campos privados desnecessários.
 * Em `CategoriaService.Remover()`, traz a lista de produtos apenas para verificar se está vazia. Isso pode ser ineficiente. Recomenda-se usar `AnyAsync()` para essa verificação. O mesmo problema existe em `ClienteService.ObterPorId()`.
-* O serviço `ProdutoService` gerencia `Favorito`, o que quebra a responsabilidade única. Recomenda-se criar um serviço específico para `Favorito`.
-* O serviço `VendedorService` possui um método `InativarOuReativarAsync()` ou seja, duas responsabilidades em um único método. Recomenda-se separar em dois métodos distintos.
+* O serviço `VendedorService` possui um método `InativarOuReativarAsync()` ou seja, duas responsabilidades em um único método e não se sabe qual será executada. Recomenda-se separar em dois métodos distintos.
 * As classes `IdentityMensagensPortugues` e `JwtSettings` estão sob `Extensions`, mas não são extensões.
-* `CategoriaViewModel` está gerando um novo Id, mas isso é de responsabilidade da entidade de domínio. View models ou DTOs apenas transportam dados.
+* `CategoriaViewModel` está gerando um novo Id, mas isso é de responsabilidade da entidade de negócio. View models ou DTOs apenas transportam dados.
 * Em `ProdutoViewModel` o nome da propriedade `NaListaDesejos` deve iniciar com `Esta` para seguir a convenção de nomenclatura.
 
 ### API
 * Em `Program.cs`, a configuração de arquivos estáticos podem ser movidas para uma extensão de método para melhorar a organização.
 * Em `DbMigrationsHelpersExtension` o método `UseDbMigrationsHelpers` deve ser assíncrono.
-* _Controllers_ não devem acessar diretamente repositórios ou context de banco de dados. Eles devem interagir apenas com serviços.
-* Os métodos `ProdutosController.SalvarImagem` e `ExcluirImagem` devem ser movidos para um serviço específico de gerenciamento de arquivos ou imagens.
-* Em API, chamamos os tipos de entrada e saída de DTO (Data Transfer Object) ao invés de ViewModel, que é mais comum em aplicações MVC.
+* _Controllers_ não devem acessar diretamente repositórios ou context de banco de dados. Eles devem interagir apenas com serviços de negócio.
+* Os métodos `ProdutosController.SalvarImagem()` e `ExcluirImagem()` devem ser movidos para um serviço de negócio específico de gerenciamento de arquivos ou imagens.
 
 ### AppMvc
-* Existem _ViewModels_ gerando Id, mas isso é de responsabilidade da entidade de domínio.
+* Existem _ViewModels_ gerando Id, mas isso é de responsabilidade da entidade de negócio.
 * Existem pastas `ViewModels` e `Models`, mas dentro de `Models` há apenas uma `ViewModel`.
 * _Controllers_ não devem acessar diretamente repositórios ou context de banco de dados. Eles devem interagir apenas com serviços.
 
@@ -62,7 +63,7 @@ public async Task<Categoria?> GetByIdAsync(int id) => await _context.Categories.
 * Normalizar a nomenclatura de variáveis e métodos para seguir um padrão consistente - ou Português ou Inglês.
 * Evitar comentários desnecessários que não agregam valor ao entendimento do código.
 * Evitar código comentado. Se não for mais necessário, remova.
-
+* Evitar uso de _magic strings_, como no nome das _Roles_ de usuário. Crie constantes ou enums para esses valores.
 
 ## Eficiência e Desempenho 20%
 
@@ -84,20 +85,22 @@ Considere a criatividade e inovação na solução proposta.
 Verifique a qualidade e completude da documentação, incluindo README.md.
 
 * A estrutura de diretórios não é refletida na estrutura do arquivo de solução `ClickMarket.sln`, deixando a navegação confusa.
-* O projeto de `API` está sob o diretório de `FrontEnd`, apesar de ser um serviço de `Backend`.
+* O nome dos projetos de aplicação devem expressar melhor sua função ao invés de se baser em duas tecnologia, por exemplo:
+  * `ClickMarket.Spa` para `ClickMarket.Loja`
+  * `ClickMarket.Api` para `ClickMarket.Loja.Api`
+  * `ClickMarket.Mvc` para `ClickMarket.Administracao`
 * Existe uma pasta órfão em `./src/FrontEnd/wwwroot`.
 * A executar `dotnet run` em qualquer projeto, ele iniciou na porta de `http`. Isso pois o perfil padrão é o `http`. Ao executar `dotnet run --launch-profile https`, ele iniciou `https` como documentado.
 * Em **Executar o SPA**, o link para acessar a aplicação está incorreto, aponta para a documentação da API.
-* Se vários projetos devem ser iniciados juntos, recomenda-se configurar um "Compound".
+* Se vários projetos devem ser iniciados juntos, recomenda-se configurar um [Compound](https://learn.microsoft.com/pt-br/microsoft-edge/visual-studio-code/microsoft-edge-devtools-extension/launch-json#compound-configurations).
 * Não especifica como ou qual projeto executar para o *database migration*
 * Menciona `appsettings.json` mas não especifica de qual projeto
 * Em parte da documentação é usado o termo "rodar projeto" em outras "executar projeto". Recomenda-se adotar "executar".
-* Para arquivos temporários, recomenda-se usar o caminho padrão do Windows, `%Temp%`, que sempre aponta para `C:\Users\<Usuario>\AppData\Local\Temp`
+* Para arquivos temporários, recomenda-se usar o caminho padrão do Windows, `%Temp%/NomeDaApp`, que sempre aponta para `C:\Users\<Usuario>\AppData\Local\Temp`
 
 Considerações:
 * A solução de documentação é boa, mas pode ser melhorada com as correções acima.
 * Consegui executar toda a solução com as informações fornecidas, mas tive que fazer algumas suposições.
-
 
 ## Resolução de Feedbacks 10%
 
