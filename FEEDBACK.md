@@ -107,3 +107,15 @@ Considerações:
 Avalie a resolução dos problemas apontados na primeira avaliação de frontend
 
 * Não havia pontos negativos na avaliação geral para serem corrigidos.
+
+## Notas
+
+| Critério                     | Peso | Nota | Nota Ponderada |
+|------------------------------|------|-----:|---------------:|
+| Funcionalidade               | 30%  |   10 |            3.0 |
+| Qualidade do Código          | 20%  |    7 |            1.4 |
+| Eficiência e Desempenho      | 20%  |    8 |            1.6 |
+| Inovação e Diferenciais      | 10%  |    8 |            0.8 |
+| Documentação e Organização   | 10%  |    7 |            0.7 |
+| Resolução de Feedbacks       | 10%  |   10 |            0.1 |
+| **Total**                    |      |      |        **7.6** |
